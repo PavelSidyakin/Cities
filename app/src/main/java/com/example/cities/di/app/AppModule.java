@@ -1,10 +1,9 @@
 package com.example.cities.di.app;
 
 import com.example.cities.data.ApplicationProviderImpl;
-import com.example.cities.data.CitiesRepositoryImpl;
-import com.example.cities.di.PerFeature;
 import com.example.cities.domain.ApplicationProvider;
-import com.example.cities.domain.CitiesRepository;
+import com.example.cities.utils.rx.SchedulerProvider;
+import com.example.cities.utils.rx.SchedulerProviderImpl;
 
 import javax.inject.Singleton;
 
@@ -17,5 +16,9 @@ public abstract class AppModule {
     @Binds
     @Singleton
     abstract ApplicationProvider provideApplicationProvider(ApplicationProviderImpl applicationProvider);
+
+    @Binds
+    @Singleton
+    abstract SchedulerProvider provideSchedulerProvider(SchedulerProviderImpl schedulerProvider);
 
 }

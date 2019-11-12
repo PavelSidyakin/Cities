@@ -6,6 +6,7 @@ import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.domain.CitiesRepository;
 import com.example.cities.model.data.CitiesData;
 import com.example.cities.model.data.CityData;
+import com.example.cities.utils.rx.SchedulerProvider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -21,10 +22,12 @@ import io.reactivex.Single;
 public class CitiesRepositoryImpl implements CitiesRepository {
 
     private final ApplicationProvider applicationProvider;
+    private final SchedulerProvider schedulerProvider;
 
     @Inject
-    CitiesRepositoryImpl(ApplicationProvider applicationProvider) {
+    CitiesRepositoryImpl(ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider) {
         this.applicationProvider = applicationProvider;
+        this.schedulerProvider = schedulerProvider;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class CitiesRepositoryImpl implements CitiesRepository {
                 .map(inputStream -> new InputStreamReader(inputStream))
                 .map(inputStreamReader -> new JsonReader(inputStreamReader))
                 .map(jsonReader -> new Gson().<List<CityData>>fromJson(jsonReader, new TypeToken<List<CityData>>() {}.getType()))
-                .map(cityDataList -> new CitiesData(cityDataList));
+                .map(cityDataList -> new CitiesData(cityDataList))
+                .subscribeOn(schedulerProvider.io());
     }
 }

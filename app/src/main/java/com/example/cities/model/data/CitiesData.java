@@ -1,5 +1,7 @@
 package com.example.cities.model.data;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class CitiesData {
@@ -13,6 +15,7 @@ public class CitiesData {
         return cityDataList;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "CitiesData{" +
