@@ -3,7 +3,7 @@ package com.example.cities.data;
 import com.example.cities.R;
 import com.example.cities.di.PerFeature;
 import com.example.cities.domain.ApplicationProvider;
-import com.example.cities.domain.CitiesRepository;
+import com.example.cities.domain.cities_search.CitiesRepository;
 import com.example.cities.model.data.CitiesData;
 import com.example.cities.model.data.CityData;
 import com.example.cities.utils.rx.SchedulerProvider;

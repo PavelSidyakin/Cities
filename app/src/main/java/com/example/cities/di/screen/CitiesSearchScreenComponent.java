@@ -9,5 +9,4 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {CitiesSearchModule.class})
 @PerFeature
 public interface CitiesSearchScreenComponent {
-    void inject(TheApplication theApplication);
 }

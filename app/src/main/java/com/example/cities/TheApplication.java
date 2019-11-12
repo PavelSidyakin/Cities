@@ -1,12 +1,11 @@
 package com.example.cities;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.cities.di.app.AppComponent;
 import com.example.cities.di.app.DaggerAppComponent;
 import com.example.cities.domain.ApplicationProvider;
-import com.example.cities.domain.CitiesRepository;
+import com.example.cities.domain.initialization.impl.InitializationHelper;
 
 import javax.inject.Inject;
 
@@ -18,7 +17,8 @@ public class TheApplication extends Application {
     ApplicationProvider applicationProvider;
 
     @Inject
-    CitiesRepository citiesRepository;
+    InitializationHelper initializationHelper;
+
 
     @Override
     public void onCreate() {
@@ -30,7 +30,7 @@ public class TheApplication extends Application {
 
         applicationProvider.init(this);
 
-        appComponent.getCitiesSearchScreenComponent().inject(this);
+        initializationHelper.launchInitialization();
 
     }
 

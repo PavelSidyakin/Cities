@@ -1,4 +1,4 @@
-package com.example.cities.domain;
+package com.example.cities.domain.cities_search;
 
 import com.example.cities.model.data.CitiesData;
 

@@ -8,11 +8,12 @@ import com.example.cities.domain.cities_search.CitiesSearchInteractorImpl;
 import com.example.cities.presentation.cities.cities_search.CitiesSearch;
 import com.example.cities.model.data.CityData;
 
+import javax.inject.Inject;
+
 public class CitiesSearchDataSource extends PageKeyedDataSource<Integer, CityData> implements RetryCallback {
 
     private final String searchText;
     private final CitiesSearch.Presenter citiesSearchPresenter;
-    private final CitiesSearchInteractor citiesSearchInteractor = new CitiesSearchInteractorImpl();
 
     public CitiesSearchDataSource(String searchText, CitiesSearch.Presenter citiesSearchPresenter) {
         this.searchText = searchText;

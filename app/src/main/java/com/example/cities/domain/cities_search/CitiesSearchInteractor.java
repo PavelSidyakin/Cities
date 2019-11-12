@@ -7,8 +7,6 @@ import io.reactivex.Single;
 
 public interface CitiesSearchInteractor {
 
-    Completable init();
-
     Single<CitiesSearchResultData> requestCities(String searchText, int pageIndex, int pageItemCount);
 
 }
