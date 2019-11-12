@@ -5,9 +5,8 @@ import androidx.paging.PageKeyedDataSource;
 
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.domain.cities_search.CitiesSearchInteractorImpl;
-import com.example.cities.model.CitiesSearchResult;
 import com.example.cities.presentation.cities.cities_search.CitiesSearch;
-import com.example.cities.model.CityData;
+import com.example.cities.model.data.CityData;
 
 public class CitiesSearchDataSource extends PageKeyedDataSource<Integer, CityData> implements RetryCallback {
 
