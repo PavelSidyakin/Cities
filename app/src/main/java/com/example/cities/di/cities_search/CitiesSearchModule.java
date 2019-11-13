@@ -1,6 +1,6 @@
 package com.example.cities.di.cities_search;
 
-import com.example.cities.di.screen.main_activity.cities_search.CitiesSearchFragmentScope;
+import com.example.cities.di.screen.cities_search.CitiesSearchFragmentScope;
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.domain.cities_search.CitiesSearchInteractorImpl;
 

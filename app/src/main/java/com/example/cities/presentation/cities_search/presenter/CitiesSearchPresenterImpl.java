@@ -1,4 +1,4 @@
-package com.example.cities.presentation.main_activity.cities_search.presenter;
+package com.example.cities.presentation.cities_search.presenter;
 
 import android.util.Log;
 
@@ -8,8 +8,8 @@ import androidx.paging.RxPagedListBuilder;
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.model.CitiesSearchResultCode;
 import com.example.cities.model.data.CityData;
-import com.example.cities.presentation.main_activity.cities_search.CitiesSearch;
-import com.example.cities.presentation.main_activity.cities_search.presenter.recycler.CitiesSearchDataSourceFactory;
+import com.example.cities.presentation.cities_search.CitiesSearch;
+import com.example.cities.presentation.cities_search.presenter.recycler.CitiesSearchDataSourceFactory;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.concurrent.TimeUnit;

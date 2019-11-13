@@ -2,6 +2,11 @@
     <string name="app_name">Cities</string>
     <string name="about_title">About</string>
 
+    <string name="city_list_error_text">Error. Tap here to retry</string>
+    <string name="cities_search_view_hint">Type to search a city</string>
+
     <string name="city_list_item_coordinates_mask">%.3f, %.3f</string>
+
+    <string name="main_screen_initialization_loading_progress_text">Loading city list…</string>
 
 </resources>

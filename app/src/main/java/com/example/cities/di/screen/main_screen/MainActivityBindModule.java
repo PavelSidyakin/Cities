@@ -1,6 +1,6 @@
-package com.example.cities.di.screen.main_activity;
+package com.example.cities.di.screen.main_screen;
 
-import com.example.cities.presentation.MainActivity;
+import com.example.cities.presentation.main_screen.view.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

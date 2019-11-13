@@ -2,7 +2,7 @@ package com.example.cities.di.app;
 
 import com.example.cities.TheApplication;
 import com.example.cities.di.screen.about.AboutActivityBindModule;
-import com.example.cities.di.screen.main_activity.MainActivityBindModule;
+import com.example.cities.di.screen.main_screen.MainActivityBindModule;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.example.cities.presentation.about_app;
+package com.example.cities.presentation.about_app.view;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cities.R;
+import com.example.cities.presentation.about_app.About;
 
 import javax.inject.Inject;
 
@@ -41,7 +42,7 @@ public class AboutActivity extends AppCompatActivity implements About.View {
         progressBar = findViewById(R.id.progressBar);
         errorView = findViewById(R.id.errorView);
         infoContainer = findViewById(R.id.infoContainer);
-        presenter.requestAboutInfo();
+        presenter.onViewReady();
     }
 
     @Override

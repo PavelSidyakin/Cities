@@ -1,10 +1,12 @@
-package com.example.cities.presentation.main_activity.cities_search.view;
+package com.example.cities.presentation.cities_search.view;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cities.R;
 import com.example.cities.model.data.CityData;
-import com.example.cities.presentation.main_activity.cities_search.CitiesSearch;
-import com.example.cities.presentation.main_activity.cities_search.view.recycler.CityListAdapter;
+import com.example.cities.presentation.cities_search.CitiesSearch;
+import com.example.cities.presentation.cities_search.view.recycler.CityListAdapter;
 
 import javax.inject.Inject;
 
@@ -28,6 +30,8 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     CitiesSearch.Presenter presenter;
 
     private RecyclerView citiesRecyclerView;
+    private ProgressBar progressBar;
+    private TextView errorTextView;
 
     private CityListAdapter cityListAdapter = new CityListAdapter();
 
@@ -57,6 +61,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
         citiesRecyclerView = view.findViewById(R.id.recycler_list_cities_search);
 
         citiesRecyclerView.setAdapter(cityListAdapter);
+
+        errorTextView = view.findViewById(R.id.text_view_error_cities_search);
+        progressBar = view.findViewById(R.id.progress_bar_cities_search);
+
+        errorTextView.setOnClickListener(v -> presenter.retry());
 
         SearchView searchView = view.findViewById(R.id.search_view_cities_search);
 
@@ -92,21 +101,21 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
 
     @Override
     public void showError() {
-
+        errorTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideError() {
-
+        errorTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void showProgress() {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

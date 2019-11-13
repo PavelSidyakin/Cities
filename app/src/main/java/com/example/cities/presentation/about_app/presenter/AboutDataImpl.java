@@ -1,4 +1,4 @@
-package com.example.cities.presentation.about_app.impl;
+package com.example.cities.presentation.about_app.presenter;
 
 import android.content.res.AssetManager;
 

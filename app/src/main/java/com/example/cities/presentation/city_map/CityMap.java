@@ -1,4 +1,4 @@
-package com.example.cities.presentation.main_activity.city_map;
+package com.example.cities.presentation.city_map;
 
 import com.google.android.gms.maps.model.LatLng;
 

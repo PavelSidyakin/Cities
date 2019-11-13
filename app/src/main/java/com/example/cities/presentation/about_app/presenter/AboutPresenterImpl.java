@@ -1,4 +1,4 @@
-package com.example.cities.presentation.about_app.impl;
+package com.example.cities.presentation.about_app.presenter;
 
 import android.util.Log;
 
@@ -37,7 +37,7 @@ public class AboutPresenterImpl implements About.Presenter {
     }
 
     @Override
-    public void requestAboutInfo() {
+    public void onViewReady() {
         About.View aboutView = aboutViewRef;
         if (aboutView != null) {
             aboutView.showProgress();
@@ -50,7 +50,7 @@ public class AboutPresenterImpl implements About.Presenter {
             .doFinally(() -> requestAboutInfoDisposable = null)
             .subscribe(aboutInfo -> onSuccess(aboutInfo),
                 throwable -> {
-                    Log.w(TAG, "AboutPresenterImpl.requestAboutInfo() Failed", throwable);
+                    Log.w(TAG, "AboutPresenterImpl.onViewReady() Failed", throwable);
                     onFail();
             });
     }
