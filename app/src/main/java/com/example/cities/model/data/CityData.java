@@ -16,6 +16,13 @@ public class CityData {
     @SerializedName("_id")
     private int id;
 
+    public CityData(String name, String country, CityCoordinates cityCoordinates, int id) {
+        this.name = name;
+        this.country = country;
+        this.cityCoordinates = cityCoordinates;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

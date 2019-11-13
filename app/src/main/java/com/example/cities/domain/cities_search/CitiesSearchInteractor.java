@@ -1,12 +1,11 @@
 package com.example.cities.domain.cities_search;
 
-import com.example.cities.model.CitiesSearchResultData;
+import com.example.cities.model.CitiesSearchResult;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public interface CitiesSearchInteractor {
 
-    Single<CitiesSearchResultData> requestCities(String searchText, int pageIndex, int pageItemCount);
+    Single<CitiesSearchResult> requestCities(String searchText, int pageIndex, int pageItemCount);
 
 }

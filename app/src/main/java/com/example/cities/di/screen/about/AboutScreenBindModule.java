@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class AboutScreenBuildersModule {
+public abstract class AboutScreenBindModule {
 
     @ContributesAndroidInjector(modules = {AboutScreenModule.class})
     abstract AboutActivity bindAboutActivity();

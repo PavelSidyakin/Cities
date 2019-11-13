@@ -31,7 +31,7 @@ public class AboutActivity extends AppCompatActivity implements About.View {
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.layout_activity_about);
 
         companyName = findViewById(R.id.companyName);
         companyAddress = findViewById(R.id.companyAdress);
