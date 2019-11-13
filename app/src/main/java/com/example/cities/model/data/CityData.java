@@ -40,6 +40,29 @@ public class CityData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CityData cityData = (CityData) o;
+
+        if (id != cityData.id) return false;
+        if (name != null ? !name.equals(cityData.name) : cityData.name != null) return false;
+        if (country != null ? !country.equals(cityData.country) : cityData.country != null)
+            return false;
+        return cityCoordinates != null ? cityCoordinates.equals(cityData.cityCoordinates) : cityData.cityCoordinates == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (cityCoordinates != null ? cityCoordinates.hashCode() : 0);
+        result = 31 * result + id;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "CityData{" +
                 "name='" + name + '\'' +

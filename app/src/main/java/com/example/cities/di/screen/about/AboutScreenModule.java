@@ -1,6 +1,6 @@
 package com.example.cities.di.screen.about;
 
-import com.example.cities.di.PerFeature;
+import com.example.cities.di.AboutScreenScope;
 import com.example.cities.presentation.about_app.About;
 import com.example.cities.presentation.about_app.AboutActivity;
 import com.example.cities.presentation.about_app.impl.AboutPresenterImpl;
@@ -12,11 +12,11 @@ import dagger.Module;
 public abstract class AboutScreenModule {
 
     @Binds
-    @PerFeature
+    @AboutScreenScope
     abstract About.Presenter provideAboutPresenter(AboutPresenterImpl aboutPresenter);
 
     @Binds
-    @PerFeature
+    @AboutScreenScope
     abstract About.View provideAboutView(AboutActivity aboutActivity);
 
 }

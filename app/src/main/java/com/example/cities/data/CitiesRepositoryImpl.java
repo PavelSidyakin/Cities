@@ -1,7 +1,6 @@
 package com.example.cities.data;
 
 import com.example.cities.R;
-import com.example.cities.di.PerFeature;
 import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.domain.cities_search.CitiesRepository;
 import com.example.cities.model.data.CitiesData;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-@PerFeature
 public class CitiesRepositoryImpl implements CitiesRepository {
 
     private final ApplicationProvider applicationProvider;

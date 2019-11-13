@@ -1,8 +1,7 @@
 package com.example.cities.di.cities_search;
 
-import com.example.cities.data.CitiesRepositoryImpl;
-import com.example.cities.di.PerFeature;
-import com.example.cities.domain.cities_search.CitiesRepository;
+import com.example.cities.di.CitiesSearchScreenScope;
+import com.example.cities.di.MainActivityScope;
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.domain.cities_search.CitiesSearchInteractorImpl;
 
@@ -13,7 +12,7 @@ import dagger.Module;
 public abstract class CitiesSearchModule {
 
     @Binds
-    @PerFeature
+    @CitiesSearchScreenScope
     abstract CitiesSearchInteractor provideCitiesSearchInteractor(CitiesSearchInteractorImpl citiesSearchInteractor);
 
 }

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Cities</string>
     <string name="about_title">About</string>
+
+    <string name="city_list_item_coordinates_mask">%.3f, %.3f</string>
+
 </resources>

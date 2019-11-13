@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view_cities_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -38,6 +38,7 @@
         android:id="@+id/recycler_list_cities_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/text_view_error_cities_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

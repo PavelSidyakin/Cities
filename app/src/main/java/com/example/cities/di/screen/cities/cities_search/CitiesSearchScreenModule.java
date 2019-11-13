@@ -1,9 +1,9 @@
 package com.example.cities.di.screen.cities.cities_search;
 
-import com.example.cities.di.PerFeature;
+import com.example.cities.di.CitiesSearchScreenScope;
 import com.example.cities.presentation.cities.cities_search.CitiesSearch;
-import com.example.cities.presentation.cities.cities_search.CitiesSearchFragment;
-import com.example.cities.presentation.cities.cities_search.impl.CitiesSearchPresenterImpl;
+import com.example.cities.presentation.cities.cities_search.presenter.CitiesSearchPresenterImpl;
+import com.example.cities.presentation.cities.cities_search.view.CitiesSearchFragment;
 
 import dagger.Binds;
 import dagger.Module;
@@ -12,11 +12,11 @@ import dagger.Module;
 public abstract class CitiesSearchScreenModule {
 
     @Binds
-    @PerFeature
+    @CitiesSearchScreenScope
     abstract CitiesSearch.Presenter provideCitiesSearchPresenter(CitiesSearchPresenterImpl presenter);
 
     @Binds
-    @PerFeature
+    @CitiesSearchScreenScope
     abstract CitiesSearch.View provideCitiesSearchView(CitiesSearchFragment citiesSearchFragment);
 
 }
