@@ -7,10 +7,10 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class MainActivityScreenBindModule {
+public abstract class MainActivityBindModule {
 
     @MainActivityScope
-    @ContributesAndroidInjector(modules = {MainActivityScreenModule.class})
+    @ContributesAndroidInjector(modules = {MainActivityModule.class})
     abstract MainActivity bindMainActivity();
 
 }

@@ -1,4 +1,4 @@
-package com.example.cities.di;
+package com.example.cities.di.screen.about;
 
 import java.lang.annotation.Retention;
 
@@ -8,5 +8,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Scope
 @Retention(RUNTIME)
-public @interface CitiesSearchScreenScope {
+public @interface AboutActivityScope {
 }
