@@ -1,4 +1,4 @@
-package com.example.cities.presentation.cities.cities_search.view;
+package com.example.cities.presentation.main_activity.cities_search.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cities.R;
 import com.example.cities.model.data.CityData;
-import com.example.cities.presentation.cities.cities_search.CitiesSearch;
-import com.example.cities.presentation.cities.cities_search.view.recycler.CityListAdapter;
+import com.example.cities.presentation.main_activity.cities_search.CitiesSearch;
+import com.example.cities.presentation.main_activity.cities_search.view.recycler.CityListAdapter;
 
 import javax.inject.Inject;
 

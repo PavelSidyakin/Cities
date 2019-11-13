@@ -1,4 +1,4 @@
-package com.example.cities.presentation.cities.cities_search;
+package com.example.cities.presentation.main_activity.cities_search;
 
 import androidx.paging.PagedList;
 

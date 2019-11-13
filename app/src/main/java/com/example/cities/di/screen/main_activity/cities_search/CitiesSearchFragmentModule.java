@@ -1,8 +1,8 @@
 package com.example.cities.di.screen.main_activity.cities_search;
 
-import com.example.cities.presentation.cities.cities_search.CitiesSearch;
-import com.example.cities.presentation.cities.cities_search.presenter.CitiesSearchPresenterImpl;
-import com.example.cities.presentation.cities.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.main_activity.cities_search.CitiesSearch;
+import com.example.cities.presentation.main_activity.cities_search.presenter.CitiesSearchPresenterImpl;
+import com.example.cities.presentation.main_activity.cities_search.view.CitiesSearchFragment;
 
 import dagger.Binds;
 import dagger.Module;

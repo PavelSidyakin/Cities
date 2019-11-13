@@ -1,11 +1,11 @@
-package com.example.cities.presentation.cities.cities_search.presenter.recycler;
+package com.example.cities.presentation.main_activity.cities_search.presenter.recycler;
 
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.model.data.CityData;
-import com.example.cities.presentation.cities.cities_search.CitiesSearch;
+import com.example.cities.presentation.main_activity.cities_search.CitiesSearch;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import io.reactivex.Observable;

@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cities.R;
-import com.example.cities.presentation.cities.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.main_activity.cities_search.view.CitiesSearchFragment;
 
 import dagger.android.support.DaggerAppCompatActivity;
 

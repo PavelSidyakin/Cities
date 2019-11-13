@@ -1,4 +1,4 @@
-package com.example.cities.presentation.cities.cities_search.view.recycler;
+package com.example.cities.presentation.main_activity.cities_search.view.recycler;
 
 import android.view.ViewGroup;
 
