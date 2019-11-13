@@ -2,6 +2,8 @@ package com.example.cities.presentation.about_app;
 
 import com.example.cities.presentation.about_app.model.AboutInfo;
 
+import io.reactivex.Single;
+
 /**
  * Created by Backbase R&D B.V on 28/06/2018.
  * MVP contract for AboutActivity
@@ -10,13 +12,14 @@ import com.example.cities.presentation.about_app.model.AboutInfo;
 public interface About {
 
     interface Data {
-        void requestAboutInfo();
+        Single<AboutInfo> requestAboutInfo();
     }
 
     interface Presenter {
         void requestAboutInfo();
         void onSuccess(AboutInfo aboutInfo);
         void onFail();
+        void onDestroyView();
     }
 
     interface View {

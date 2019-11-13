@@ -1,24 +1,18 @@
 package com.example.cities.di.app;
 
 import com.example.cities.TheApplication;
-import com.example.cities.di.screen.CitiesSearchScreenComponent;
-import com.example.cities.di.screen.CityMapScreenComponent;
+import com.example.cities.di.screen.about.AboutScreenBuildersModule;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.android.support.AndroidSupportInjectionModule;
 
-@Component(modules = {AppModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, AboutScreenBuildersModule.class})
 @Singleton
 public interface AppComponent {
-
-    CitiesSearchScreenComponent getCitiesSearchScreenComponent();
-    CityMapScreenComponent getCityMapScreenComponent();
-
     void inject(TheApplication theApplication);
 
-    interface Builder {
-        AppComponent build();
-    }
+
 
 }

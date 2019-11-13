@@ -7,7 +7,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cities.R;
-import com.example.cities.presentation.about_app.impl.AboutPresenterImpl;
+
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
 
 
 public class AboutActivity extends AppCompatActivity implements About.View {
@@ -21,11 +24,15 @@ public class AboutActivity extends AppCompatActivity implements About.View {
     private android.view.View errorView;
     private android.view.View infoContainer;
 
+    @Inject
+    About.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        AboutPresenterImpl aboutPresenter = new AboutPresenterImpl(this, this);
+
         companyName = findViewById(R.id.companyName);
         companyAddress = findViewById(R.id.companyAdress);
         companyPostal = findViewById(R.id.companypostal);
@@ -34,7 +41,13 @@ public class AboutActivity extends AppCompatActivity implements About.View {
         progressBar = findViewById(R.id.progressBar);
         errorView = findViewById(R.id.errorView);
         infoContainer = findViewById(R.id.infoContainer);
-        aboutPresenter.requestAboutInfo();
+        presenter.requestAboutInfo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroyView();
     }
 
     @Override

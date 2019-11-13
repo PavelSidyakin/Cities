@@ -1,20 +1,19 @@
 package com.example.cities.presentation.about_app.impl;
 
-import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-
+import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.presentation.about_app.About;
 import com.example.cities.presentation.about_app.model.AboutInfo;
+import com.example.cities.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
+
+import io.reactivex.Single;
 
 /**
  * Created by Backbase R&D B.V on 28/06/2018.
@@ -23,61 +22,53 @@ import java.lang.ref.WeakReference;
 public class AboutDataImpl implements About.Data {
 
     private static final String TAG = AboutDataImpl.class.getSimpleName();
-    private final About.Presenter presenter;
-    private final WeakReference<Context> context;
+    private final ApplicationProvider applicationProvider;
+    private final SchedulerProvider schedulerProvider;
+
     private static final String FILE_NAME = "aboutInfo.json";
 
-    AboutDataImpl(@NonNull About.Presenter presenter, @NonNull Context context){
-        this.presenter = presenter;
-        this.context = new WeakReference<>(context);
+    AboutDataImpl(ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider){
+        this.applicationProvider = applicationProvider;
+        this.schedulerProvider = schedulerProvider;
     }
 
     @Override
-    public void requestAboutInfo() {
-        String aboutInfoJson = getAboutInfoFromAssets();
+    public Single<AboutInfo> requestAboutInfo() {
 
-        if(aboutInfoJson != null && !aboutInfoJson.isEmpty()){
-    		AboutInfo aboutInfo = parseAboutInfo(aboutInfoJson);
-    		if (aboutInfo != null){
-        		presenter.onSuccess(aboutInfo);
-        		return;
-   		 	}
-		}
-
-		presenter.onFail();
+        return Single.fromCallable(() -> getAboutInfoFromAssets())
+                .flatMap(aboutInfoJsonStr -> aboutInfoJsonStr.isEmpty() ?
+                        Single.error(new RuntimeException("Empty about info"))
+                        :  Single.fromCallable(() -> parseAboutInfo(aboutInfoJsonStr)))
+                .subscribeOn(schedulerProvider.io());
     }
 
     private AboutInfo parseAboutInfo(String aboutInfoJson) {
-        AboutInfo aboutInfo = null;
         try {
             JSONObject jsonObject = new JSONObject(aboutInfoJson);
+            AboutInfo aboutInfo = null;
             aboutInfo = new AboutInfo();
             aboutInfo.setCompanyName(jsonObject.getString("companyName"));
             aboutInfo.setCompanyAddress(jsonObject.getString("companyAddress"));
             aboutInfo.setCompanyCity(jsonObject.getString("city"));
             aboutInfo.setCompanyPostal(jsonObject.getString("postalCode"));
             aboutInfo.setAboutInfo(jsonObject.getString("details"));
+            return aboutInfo;
         } catch (JSONException e) {
-            Log.e(TAG, e.getLocalizedMessage(), e);
+            throw new RuntimeException("Failed to parse about info", e);
         }
-        return aboutInfo;
     }
 
     private String getAboutInfoFromAssets() {
 
-        if(context.get() != null){
-            try{
-                AssetManager manager = context.get().getAssets();
-                InputStream file = manager.open(FILE_NAME);
-                byte[] formArray = new byte[file.available()];
-                file.read(formArray);
-                file.close();
-                return new String(formArray);
-            }catch (IOException ex){
-                Log.e(TAG, ex.getLocalizedMessage(), ex);
-            }
+        try{
+            AssetManager manager = applicationProvider.getApplicationContext().getAssets();
+            InputStream file = manager.open(FILE_NAME);
+            byte[] formArray = new byte[file.available()];
+            file.read(formArray);
+            file.close();
+            return new String(formArray);
+        }catch (IOException ex) {
+            throw new RuntimeException("Failed to get about info from assets", ex);
         }
-
-        return null;
     }
 }
