@@ -1,6 +1,5 @@
-package com.example.cities.di.screen.cities;
+package com.example.cities.di.screen.main_activity;
 
-import com.example.cities.di.MainActivityScope;
 import com.example.cities.presentation.MainActivity;
 
 import dagger.Module;

@@ -1,4 +1,4 @@
-package com.example.cities.di;
+package com.example.cities.di.screen.main_activity;
 
 import java.lang.annotation.Retention;
 

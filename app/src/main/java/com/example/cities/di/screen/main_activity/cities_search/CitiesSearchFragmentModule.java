@@ -1,4 +1,4 @@
-package com.example.cities.di.screen.cities.cities_search;
+package com.example.cities.di.screen.main_activity.cities_search;
 
 import com.example.cities.presentation.cities.cities_search.CitiesSearch;
 import com.example.cities.presentation.cities.cities_search.presenter.CitiesSearchPresenterImpl;
