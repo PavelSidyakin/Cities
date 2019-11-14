@@ -1,6 +1,6 @@
 package com.example.cities.presentation.about_app;
 
-import com.example.cities.presentation.about_app.model.AboutInfo;
+import com.example.cities.model.AboutInfo;
 
 import io.reactivex.Single;
 
@@ -11,6 +11,7 @@ import io.reactivex.Single;
 
 public interface About {
 
+    // TODO: create interactor and repository
     interface Data {
         Single<AboutInfo> requestAboutInfo();
     }

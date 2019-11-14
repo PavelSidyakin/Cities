@@ -4,17 +4,16 @@ import com.google.android.gms.maps.model.LatLng;
 
 public interface CityMap {
 
-    interface Model {
-
-    }
-
     interface Presenter {
+        void onViewReady();
+
+        void onDestroyView();
 
     }
 
     interface View {
 
-        void setMarkerPos(LatLng coordinates, String title, String tag);
+        void goToCity(LatLng coordinates, String title);
 
     }
 }

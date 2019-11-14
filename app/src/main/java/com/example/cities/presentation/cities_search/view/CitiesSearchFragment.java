@@ -54,7 +54,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_fragment_cities_search, container, false);
+        return inflater.inflate(R.layout.cities_search_fragment, container, false);
     }
 
     @Override

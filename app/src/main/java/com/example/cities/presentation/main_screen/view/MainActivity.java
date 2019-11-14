@@ -25,10 +25,10 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_activity_main);
+        setContentView(R.layout.activity_main);
 
         progressDialog = new AlertDialog.Builder(this)
-            .setView(R.layout.layout_progress_dialog_initialization)
+            .setView(R.layout.main_progress_dialog_initialization)
             .setCancelable(false)
             .create();
 

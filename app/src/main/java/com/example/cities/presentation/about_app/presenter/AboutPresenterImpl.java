@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.presentation.about_app.About;
-import com.example.cities.presentation.about_app.model.AboutInfo;
+import com.example.cities.model.AboutInfo;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.concurrent.TimeUnit;

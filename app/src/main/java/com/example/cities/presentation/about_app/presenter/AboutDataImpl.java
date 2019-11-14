@@ -4,7 +4,7 @@ import android.content.res.AssetManager;
 
 import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.presentation.about_app.About;
-import com.example.cities.presentation.about_app.model.AboutInfo;
+import com.example.cities.model.AboutInfo;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;

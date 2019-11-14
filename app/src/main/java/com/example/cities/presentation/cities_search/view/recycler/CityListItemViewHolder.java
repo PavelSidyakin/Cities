@@ -42,7 +42,7 @@ public class CityListItemViewHolder extends RecyclerView.ViewHolder {
 
     public static CityListItemViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_recycler_item_cities_search, parent, false);
+                .inflate(R.layout.cities_search_recycler_item, parent, false);
 
         return new CityListItemViewHolder(view);
     }
