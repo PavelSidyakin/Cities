@@ -48,9 +48,9 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     private void initUi() {
         int displayMode = getResources().getConfiguration().orientation;
 
-        boolean isPortrait = displayMode == Configuration.ORIENTATION_PORTRAIT;
+        boolean isLandscape = displayMode == Configuration.ORIENTATION_LANDSCAPE;
 
-        setContentView(isPortrait ? R.layout.activity_main : R.layout.activity_main_land);
+        setContentView(R.layout.activity_main);
 
         progressDialog = new AlertDialog.Builder(this)
                 .setView(R.layout.main_progress_dialog_initialization)
@@ -58,13 +58,11 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
                 .create();
 
         citiesSearchFragment = (CitiesSearchFragment) getSupportFragmentManager()
-                .findFragmentById(isPortrait ? R.id.fragment_cities_search_main_activity : R.id.fragment_cities_search_main_activity_land);
+                .findFragmentById(isLandscape ? R.id.fragment_cities_search_main_activity_land : R.id.fragment_cities_search_main_activity);
         cityMapFragment = (CityMapFragment) getSupportFragmentManager()
-                .findFragmentById(isPortrait ? R.id.fragment_city_map_main_activity : R.id.fragment_city_map_main_activity_land);
+                .findFragmentById(isLandscape ? R.id.fragment_city_map_main_activity_land : R.id.fragment_city_map_main_activity);
 
-        mainActivityDelegate = isPortrait ?
-                new MainActivityPortraitDelegate()
-                : new MainActivityLandscapeDelegate();
+        mainActivityDelegate = isLandscape ? new MainActivityLandscapeDelegate() : new MainActivityPortraitDelegate();
 
         mainActivityDelegate.onCreateFinalActions();
     }
