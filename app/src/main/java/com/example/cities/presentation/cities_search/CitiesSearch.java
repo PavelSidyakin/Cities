@@ -14,6 +14,7 @@ public interface CitiesSearch {
         void onSearchTextSubmitted(String searchText);
 
         void onCityClicked(CityData cityData);
+        void onCityInfoClicked(CityData cityData);
 
         void retry();
 
@@ -31,6 +32,7 @@ public interface CitiesSearch {
         void setSearchText(String currentSearchText);
 
         void showMapWithSelectedCity();
+        void showCityInfoForSelectedCity();
 
         void showError();
         void hideError();

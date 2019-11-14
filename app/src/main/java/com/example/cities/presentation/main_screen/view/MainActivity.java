@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cities.R;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.city_info.view.CityInfoFragment;
 import com.example.cities.presentation.city_map.view.CityMapFragment;
 import com.example.cities.presentation.main_screen.MainScreen;
 
@@ -112,6 +113,16 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     @Override
     public void showCityMapScreen() {
         mainActivityDelegate.showCityMapScreen();
+    }
+
+    @Override
+    public void showCityInfoScreen() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(new CityInfoFragment(), CityInfoFragment.FRAGMENT_TAG);
+
+        fragmentTransaction.commit();
     }
 
     @Override

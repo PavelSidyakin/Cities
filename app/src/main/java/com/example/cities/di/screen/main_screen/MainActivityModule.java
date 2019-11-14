@@ -3,9 +3,12 @@ package com.example.cities.di.screen.main_screen;
 import com.example.cities.di.cities_search.CitiesSearchModule;
 import com.example.cities.di.screen.cities_search.CitiesSearchFragmentModule;
 import com.example.cities.di.screen.cities_search.CitiesSearchFragmentScope;
+import com.example.cities.di.screen.city_info.CityInfoFragmentModule;
+import com.example.cities.di.screen.city_info.CityInfoFragmentScope;
 import com.example.cities.di.screen.city_map.CityMapFragmentModule;
 import com.example.cities.di.screen.city_map.CityMapFragmentScope;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.city_info.view.CityInfoFragment;
 import com.example.cities.presentation.city_map.view.CityMapFragment;
 import com.example.cities.presentation.main_screen.MainScreen;
 import com.example.cities.presentation.main_screen.presenter.MainScreenPresenterImpl;
@@ -25,6 +28,10 @@ public abstract class MainActivityModule {
     @CityMapFragmentScope
     @ContributesAndroidInjector(modules = { CityMapFragmentModule.class })
     abstract CityMapFragment bindCiyMapFragment();
+
+    @CityInfoFragmentScope
+    @ContributesAndroidInjector(modules = {CityInfoFragmentModule.class })
+    abstract CityInfoFragment bindCiyInfoFragment();
 
     @Binds
     @MainActivityScope

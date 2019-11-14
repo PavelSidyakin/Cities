@@ -40,7 +40,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     private TextView errorTextView;
     private SearchView searchView;
 
-    private CityListAdapter cityListAdapter = new CityListAdapter();
+    private CityListAdapter cityListAdapter;
 
     @Inject
     public CitiesSearchFragment() {
@@ -60,8 +60,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         citiesRecyclerView = view.findViewById(R.id.recycler_list_cities_search);
-
-        citiesRecyclerView.setAdapter(cityListAdapter);
+        createAndSetAdapter();
 
         errorTextView = view.findViewById(R.id.text_view_error_cities_search);
         progressBar = view.findViewById(R.id.progress_bar_cities_search);
@@ -84,21 +83,15 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
             }
         });
 
-        citiesRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view1, position) -> {
-            PagedList pagedList = cityListAdapter.getCurrentList();
-
-            if (pagedList == null) {
-                return;
-            }
-
-            CityData cityData = cityListAdapter.getCurrentList().get(position);
-
-            if (cityData == null) {
-                return;
-            }
-
-            presenter.onCityClicked(cityData);
-        }));
+//        citiesRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view1, position) -> {
+//            CityData cityData = getCityDataByPosition(position);
+//
+//            if (cityData == null) {
+//                return;
+//            }
+//
+//            presenter.onCityClicked(cityData);
+//        }));
 
         presenter.onViewReady();
     }
@@ -110,9 +103,48 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
 
     @Override
     public void clearList() {
-        cityListAdapter = new CityListAdapter();
-        citiesRecyclerView.setAdapter(cityListAdapter);
+        createAndSetAdapter();
         cityListAdapter.notifyDataSetChanged();
+    }
+
+    private void createAndSetAdapter() {
+        cityListAdapter = new CityListAdapter();
+        cityListAdapter.setCityListItemInfoButtonClickHandler(position -> {
+            CityData cityData = getCityDataByPosition(position);
+
+            if (cityData == null) {
+                return;
+            }
+
+            presenter.onCityInfoClicked(cityData);
+
+        });
+
+        cityListAdapter.setItemClickHandler(position -> {
+            CityData cityData = getCityDataByPosition(position);
+
+            if (cityData == null) {
+                return;
+            }
+
+            presenter.onCityClicked(cityData);
+
+        });
+
+        citiesRecyclerView.setAdapter(cityListAdapter);
+
+    }
+
+    @Nullable
+    private CityData getCityDataByPosition(int position) {
+        PagedList pagedList = cityListAdapter.getCurrentList();
+
+        if (pagedList == null) {
+            return null;
+        }
+
+        return cityListAdapter.getCurrentList().get(position);
+
     }
 
     @Override
@@ -123,6 +155,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void showMapWithSelectedCity() {
         mainView.showCityMapScreen();
+    }
+
+    @Override
+    public void showCityInfoForSelectedCity() {
+        mainView.showCityInfoScreen();
     }
 
     @Override

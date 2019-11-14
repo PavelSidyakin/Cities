@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="32dp"
+    android:paddingLeft="32dp"
+    android:paddingEnd="32dp"
+    android:paddingRight="32dp"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp">
+    
+    <TextView
+        android:id="@+id/text_view_city_name_city_info"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        tool:text="Amsterdam"/>
+
+    <TextView
+        android:id="@+id/text_view_city_country_city_info"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/text_view_city_name_city_info"
+        app:layout_constraintStart_toStartOf="parent"
+        tool:text="Placed in country: NL"/>
+
+    <TextView
+        android:id="@+id/text_view_city_latitude_city_info"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_city_country_city_info"
+        tool:text="Latitude: 11.444"/>
+
+    <TextView
+        android:id="@+id/text_view_city_longitude_city_info"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_city_latitude_city_info"
+        tool:text="Longitude: 44.444"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

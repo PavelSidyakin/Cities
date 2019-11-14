@@ -15,5 +15,7 @@ public interface MainScreen {
         void showCitiesSearchScreen();
         void showCityMapScreen();
 
+        void showCityInfoScreen();
+
     }
 }

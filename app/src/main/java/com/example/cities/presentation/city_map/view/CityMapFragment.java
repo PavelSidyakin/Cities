@@ -33,7 +33,6 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
     private static final float DEFAULT_ZOOM = 10f;
 
-
     @Inject
     public CityMapFragment() {
     }
@@ -67,7 +66,7 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
     }
 
     private LatLng convertCityCoordinates2LatLng(CityCoordinates coordinates) {
-        return new LatLng(coordinates.getLat(), coordinates.getLon());
+        return new LatLng(coordinates.getLat(), coordinates.getLng());
     }
 
     @Override
@@ -77,13 +76,4 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
         presenter.onViewReady();
     }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        // https://stackoverflow.com/a/14484640
-//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-//                .findFragmentById(R.id.fragment_googlemap_city_map);
-//        if (mapFragment != null)
-//            getFragmentManager().beginTransaction().remove(mapFragment).commit();
-//    }
 }

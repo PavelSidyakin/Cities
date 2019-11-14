@@ -9,4 +9,8 @@
 
     <string name="main_screen_initialization_loading_progress_text">Loading city list…</string>
 
+    <string name="city_info_country_mask">Placed in country: %s</string>
+    <string name="city_info_latitude_mask">Latitude: %f</string>
+    <string name="city_info_longitude_mask">Longitude: %f</string>
+
 </resources>

@@ -10,7 +10,7 @@ public class CityCoordinates {
     @SerializedName("lat")
     private double lat;
 
-    public double getLon() {
+    public double getLng() {
         return lon;
     }
 
