@@ -1,6 +1,6 @@
 package com.example.cities.presentation.city_map;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.example.cities.model.data.CityCoordinates;
 
 public interface CityMap {
 
@@ -13,7 +13,10 @@ public interface CityMap {
 
     interface View {
 
-        void goToCity(LatLng coordinates, String title);
+        void navigateToCity(CityCoordinates coordinates);
+
+        void addCityMarker(CityCoordinates coordinates, String title);
+
 
     }
 }

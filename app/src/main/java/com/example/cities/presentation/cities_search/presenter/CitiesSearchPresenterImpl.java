@@ -113,6 +113,12 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     }
 
     @Override
+    public void onCityClicked(CityData cityData) {
+        citiesScreenInteractor.setCurrentSelectedCity(cityData);
+        view.showMapWithSelectedCity();
+    }
+
+    @Override
     public void retry() {
         retryObservableEmitter.onNext(new Object());
     }

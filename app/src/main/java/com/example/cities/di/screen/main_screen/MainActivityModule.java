@@ -1,13 +1,12 @@
 package com.example.cities.di.screen.main_screen;
 
-import com.example.cities.data.CitiesScreenRepositoryImpl;
-import com.example.cities.di.screen.cities_search.CitiesSearchFragmentScope;
 import com.example.cities.di.cities_search.CitiesSearchModule;
 import com.example.cities.di.screen.cities_search.CitiesSearchFragmentModule;
-import com.example.cities.domain.cities_search.CitiesScreenInteractor;
-import com.example.cities.domain.cities_search.CitiesScreenInteractorImpl;
-import com.example.cities.domain.cities_search.CitiesScreenRepository;
+import com.example.cities.di.screen.cities_search.CitiesSearchFragmentScope;
+import com.example.cities.di.screen.city_map.CityMapFragmentModule;
+import com.example.cities.di.screen.city_map.CityMapFragmentScope;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.city_map.view.CityMapFragment;
 import com.example.cities.presentation.main_screen.MainScreen;
 import com.example.cities.presentation.main_screen.presenter.MainScreenPresenterImpl;
 import com.example.cities.presentation.main_screen.view.MainActivity;
@@ -20,8 +19,12 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class MainActivityModule {
 
     @CitiesSearchFragmentScope
-    @ContributesAndroidInjector(modules = { CitiesSearchFragmentModule.class, CitiesSearchModule.class})
+    @ContributesAndroidInjector(modules = { CitiesSearchFragmentModule.class, CitiesSearchModule.class })
     abstract CitiesSearchFragment bindCitiesSearchFragment();
+
+    @CityMapFragmentScope
+    @ContributesAndroidInjector(modules = { CityMapFragmentModule.class })
+    abstract CityMapFragment bindCiyMapFragment();
 
     @Binds
     @MainActivityScope

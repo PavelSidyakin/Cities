@@ -13,6 +13,7 @@ public interface MainScreen {
         void hideLoadingProgress();
 
         void showCitiesSearchScreen();
+        void showCityMapScreen();
 
     }
 }

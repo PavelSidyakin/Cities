@@ -18,16 +18,22 @@ import com.example.cities.R;
 import com.example.cities.model.data.CityData;
 import com.example.cities.presentation.cities_search.CitiesSearch;
 import com.example.cities.presentation.cities_search.view.recycler.CityListAdapter;
+import com.example.cities.presentation.main_screen.MainScreen;
+import com.example.cities.utils.recyclerview.RecyclerItemClickListener;
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 
 public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch.View {
 
+    public static final String FRAGMENT_TAG = "CitiesSearchFragment";
+
     @Inject
     CitiesSearch.Presenter presenter;
+
+    @Inject
+    MainScreen.View mainView;
 
     private RecyclerView citiesRecyclerView;
     private ProgressBar progressBar;
@@ -43,12 +49,6 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        AndroidSupportInjection.inject(this);
-        super.onAttach(context);
     }
 
     @Nullable
@@ -84,6 +84,21 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
             }
         });
 
+        citiesRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view1, position) -> {
+            PagedList pagedList = cityListAdapter.getCurrentList();
+
+            if (pagedList == null) {
+                return;
+            }
+
+            CityData cityData = cityListAdapter.getCurrentList().get(position);
+
+            if (cityData == null) {
+                return;
+            }
+
+            presenter.onCityClicked(cityData);
+        }));
 
         presenter.onViewReady();
     }
@@ -103,6 +118,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void setSearchText(String currentSearchText) {
         searchView.setQuery(currentSearchText, false);
+    }
+
+    @Override
+    public void showMapWithSelectedCity() {
+        mainView.showCityMapScreen();
     }
 
     @Override

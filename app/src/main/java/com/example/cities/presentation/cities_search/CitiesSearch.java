@@ -13,6 +13,8 @@ public interface CitiesSearch {
         void onSearchTextChanged(String searchText);
         void onSearchTextSubmitted(String searchText);
 
+        void onCityClicked(CityData cityData);
+
         void retry();
 
         void onRequestStarted();
@@ -27,6 +29,8 @@ public interface CitiesSearch {
         void clearList();
 
         void setSearchText(String currentSearchText);
+
+        void showMapWithSelectedCity();
 
         void showError();
         void hideError();

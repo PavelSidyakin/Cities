@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cities.R;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
+import com.example.cities.presentation.city_map.view.CityMapFragment;
 import com.example.cities.presentation.main_screen.MainScreen;
 
 import javax.inject.Inject;
@@ -62,6 +63,18 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.frame_container_activity_main, new CitiesSearchFragment());
+
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showCityMapScreen() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.addToBackStack(CitiesSearchFragment.FRAGMENT_TAG);
+
+        fragmentTransaction.replace(R.id.frame_container_activity_main, new CityMapFragment());
 
         fragmentTransaction.commit();
     }
