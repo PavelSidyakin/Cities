@@ -30,6 +30,7 @@ public class MainScreenPresenterImpl implements MainScreen.Presenter {
         waitInitializationDisposable = initializationInteractor.observeInitializationCompleteness()
                 .doOnSubscribe(disposable -> view.showLoadingProgress())
                 .doFinally(() -> view.hideLoadingProgress())
+                .doOnDispose(() -> view.hideLoadingProgress())
                 .doOnComplete(() -> view.showCitiesSearchScreen())
                 .subscribeOn(schedulerProvider.main())
                 .subscribe();

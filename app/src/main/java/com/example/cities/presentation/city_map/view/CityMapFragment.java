@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.cities.R;
 import com.example.cities.model.data.CityCoordinates;
@@ -32,7 +31,7 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
     private GoogleMap googleMap;
 
-    private static final float DEFAULT_ZOOM = 15f;
+    private static final float DEFAULT_ZOOM = 10f;
 
 
     @Inject
@@ -47,14 +46,16 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.fragment_googlemap_city_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) fragment;
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_googlemap_city_map);
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void navigateToCity(CityCoordinates coordinates) {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(convertCityCoordinates2LatLng(coordinates), DEFAULT_ZOOM));
+        if (googleMap != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(convertCityCoordinates2LatLng(coordinates), DEFAULT_ZOOM));
+        }
     }
 
     @Override
@@ -75,4 +76,14 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
         presenter.onViewReady();
     }
+
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        // https://stackoverflow.com/a/14484640
+//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+//                .findFragmentById(R.id.fragment_googlemap_city_map);
+//        if (mapFragment != null)
+//            getFragmentManager().beginTransaction().remove(mapFragment).commit();
+//    }
 }

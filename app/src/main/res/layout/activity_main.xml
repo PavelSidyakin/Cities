@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frame_container_activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/fragment_city_map_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.cities.presentation.city_map.view.CityMapFragment"/>
+
+    <fragment
+        android:id="@+id/fragment_cities_search_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.cities.presentation.cities_search.view.CitiesSearchFragment"/>
+
+
+</FrameLayout>
