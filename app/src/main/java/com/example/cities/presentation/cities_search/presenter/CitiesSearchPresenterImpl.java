@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.paging.PagedList;
 import androidx.paging.RxPagedListBuilder;
 
+import com.example.cities.domain.cities_search.CitiesScreenInteractor;
 import com.example.cities.domain.cities_search.CitiesSearchInteractor;
 import com.example.cities.model.CitiesSearchResultCode;
 import com.example.cities.model.data.CityData;
@@ -26,17 +27,18 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     private final CitiesSearch.View view;
     private final SchedulerProvider schedulerProvider;
     private final CitiesSearchInteractor citiesSearchInteractor;
+    private final CitiesScreenInteractor citiesScreenInteractor;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private ObservableEmitter<String> performSearchObservableEmitter = null;
-    private Observable<String> performSearchObservable = Observable.create( emitter -> performSearchObservableEmitter = emitter );
+    private Observable<String> performSearchObservable = Observable.create(emitter -> performSearchObservableEmitter = emitter);
 
     private ObservableEmitter<String> submitSearchObservableEmitter = null;
-    private Observable<String> submitSearchObservable = Observable.create( emitter ->  submitSearchObservableEmitter = emitter );
+    private Observable<String> submitSearchObservable = Observable.create(emitter ->  submitSearchObservableEmitter = emitter);
 
     private ObservableEmitter<Object> retryObservableEmitter = null;
-    private Observable<Object> retryObservable = Observable.create( emitter ->  retryObservableEmitter = emitter );
+    private Observable<Object> retryObservable = Observable.create(emitter ->  retryObservableEmitter = emitter);
 
 
     private int initialPageSizeFactor = DEFAULT_INITIAL_PAGE_SIZE_FACTOR;
@@ -58,20 +60,26 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     @Inject
     public CitiesSearchPresenterImpl(CitiesSearch.View view,
                                      SchedulerProvider schedulerProvider,
-                                     CitiesSearchInteractor citiesSearchInteractor) {
+                                     CitiesSearchInteractor citiesSearchInteractor,
+                                     CitiesScreenInteractor citiesScreenInteractor) {
         this.view = view;
         this.schedulerProvider = schedulerProvider;
         this.citiesSearchInteractor = citiesSearchInteractor;
+        this.citiesScreenInteractor = citiesScreenInteractor;
     }
 
 
     @Override
     public void onViewReady() {
-        Disposable searchTextDisposable = Observable.merge(submitSearchObservable, performSearchObservable.debounce(performSearchTimeoutMillis, TimeUnit.MILLISECONDS))
+        Disposable searchTextDisposable = Observable.merge(
+                    Observable.fromCallable(() -> citiesScreenInteractor.getCurrentSearchText()),
+                    submitSearchObservable,
+                    performSearchObservable.debounce(performSearchTimeoutMillis, TimeUnit.MILLISECONDS))
                 .flatMap(searchString ->preProcessInputString(searchString))
-                .doOnNext(searchString -> Log.i(TAG, "Filtered search string: $searchString"))
+                .doOnNext(searchString -> Log.i(TAG, "Filtered search string: " + searchString))
                 .distinctUntilChanged()
-                .switchMap(searchString -> performRequest(searchString) )
+                .doOnNext(searchString -> citiesScreenInteractor.setCurrentSearchText(searchString))
+                .switchMap(searchString -> buildRequestObservable(searchString) )
                 .subscribeOn(schedulerProvider.main())
                 .subscribe(cityDataPagedList -> {
                         view.updateCityList(cityDataPagedList);
@@ -81,18 +89,27 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
 
         compositeDisposable.add(searchTextDisposable);
 
+        String currentSearchText = citiesScreenInteractor.getCurrentSearchText();
+        if (currentSearchText != null && !currentSearchText.isEmpty()) {
+            view.setSearchText(currentSearchText);
+        }
+
         view.hideError();
         view.hideProgress();
     }
 
     @Override
     public void onSearchTextChanged(String searchText) {
-        performSearchObservableEmitter.onNext(searchText);
+        if (performSearchObservableEmitter != null) {
+            performSearchObservableEmitter.onNext(searchText);
+        }
     }
 
     @Override
     public void onSearchTextSubmitted(String searchText) {
-        submitSearchObservableEmitter.onNext(searchText);
+        if (submitSearchObservableEmitter != null) {
+            submitSearchObservableEmitter.onNext(searchText);
+        }
     }
 
     @Override
@@ -113,7 +130,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
             .subscribeOn(schedulerProvider.main());
     }
 
-    private Observable<PagedList<CityData>> performRequest(String searchString) {
+    private Observable<PagedList<CityData>> buildRequestObservable(String searchString) {
         return Observable.fromCallable(() ->
                 new CitiesSearchDataSourceFactory(searchString, retryObservable, this, schedulerProvider,citiesSearchInteractor, compositeDisposable, initialPageSizeFactor)
             )
@@ -123,9 +140,9 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                 .setFetchScheduler(schedulerProvider.io())
                 .buildObservable()
             )
-            .doOnSubscribe(disposable -> Log.i(TAG, "CitiesSearchPresenterImpl.performRequest(): Subscribe. "))
-            .doOnNext(result -> Log.i(TAG, "CitiesSearchPresenterImpl.performRequest(): Success. result=" + result))
-            .doOnError(throwable -> Log.w(TAG, "CitiesSearchPresenterImpl.performRequest(): Error", throwable));
+            .doOnSubscribe(disposable -> Log.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Subscribe. "))
+            .doOnNext(result -> Log.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Success. result=" + result))
+            .doOnError(throwable -> Log.w(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Error", throwable));
     }
 
     @Override
@@ -137,5 +154,12 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     public void onResult(CitiesSearchResultCode resultCode) {
         view.hideProgress();
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
     }
 }

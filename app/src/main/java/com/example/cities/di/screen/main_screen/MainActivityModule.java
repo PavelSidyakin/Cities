@@ -1,8 +1,12 @@
 package com.example.cities.di.screen.main_screen;
 
+import com.example.cities.data.CitiesScreenRepositoryImpl;
 import com.example.cities.di.screen.cities_search.CitiesSearchFragmentScope;
 import com.example.cities.di.cities_search.CitiesSearchModule;
 import com.example.cities.di.screen.cities_search.CitiesSearchFragmentModule;
+import com.example.cities.domain.cities_search.CitiesScreenInteractor;
+import com.example.cities.domain.cities_search.CitiesScreenInteractorImpl;
+import com.example.cities.domain.cities_search.CitiesScreenRepository;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
 import com.example.cities.presentation.main_screen.MainScreen;
 import com.example.cities.presentation.main_screen.presenter.MainScreenPresenterImpl;

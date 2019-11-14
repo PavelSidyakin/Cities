@@ -39,7 +39,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     @Override
     protected void onDestroy() {
         // TODO: remove it. Added to test activity destroying
-        finish();
+        //finish();
 
         presenter.onDestroyView();
 

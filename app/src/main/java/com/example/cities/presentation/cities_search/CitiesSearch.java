@@ -18,12 +18,15 @@ public interface CitiesSearch {
         void onRequestStarted();
         void onResult(CitiesSearchResultCode resultCode);
 
+        void onDestroyView();
     }
 
     interface View {
 
         void updateCityList(PagedList<CityData> cityList);
         void clearList();
+
+        void setSearchText(String currentSearchText);
 
         void showError();
         void hideError();

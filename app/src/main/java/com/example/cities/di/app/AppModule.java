@@ -2,8 +2,13 @@ package com.example.cities.di.app;
 
 import com.example.cities.data.ApplicationProviderImpl;
 import com.example.cities.data.CitiesRepositoryImpl;
+import com.example.cities.data.CitiesScreenRepositoryImpl;
+import com.example.cities.di.screen.main_screen.MainActivityScope;
 import com.example.cities.domain.ApplicationProvider;
 import com.example.cities.domain.cities_search.CitiesRepository;
+import com.example.cities.domain.cities_search.CitiesScreenInteractor;
+import com.example.cities.domain.cities_search.CitiesScreenInteractorImpl;
+import com.example.cities.domain.cities_search.CitiesScreenRepository;
 import com.example.cities.domain.cities_search.CitiesSearchPreLoadInteractor;
 import com.example.cities.domain.cities_search.CitiesSearchPreLoadInteractorImpl;
 import com.example.cities.domain.initialization.InitializationInteractor;
@@ -50,5 +55,14 @@ abstract class AppModule {
     @Binds
     @Singleton
     abstract CitiesRepository provideCitiesRepository(CitiesRepositoryImpl citiesRepository);
+
+    @Binds
+    @Singleton
+    abstract CitiesScreenInteractor provideCitiesScreenInteractor(CitiesScreenInteractorImpl citiesScreenInteractor);
+
+    @Binds
+    @Singleton
+    abstract CitiesScreenRepository provideCitiesScreenRepository(CitiesScreenRepositoryImpl citiesScreenRepository);
+
 
 }

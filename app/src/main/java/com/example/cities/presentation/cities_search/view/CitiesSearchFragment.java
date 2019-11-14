@@ -32,6 +32,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     private RecyclerView citiesRecyclerView;
     private ProgressBar progressBar;
     private TextView errorTextView;
+    private SearchView searchView;
 
     private CityListAdapter cityListAdapter = new CityListAdapter();
 
@@ -67,7 +68,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
 
         errorTextView.setOnClickListener(v -> presenter.retry());
 
-        SearchView searchView = view.findViewById(R.id.search_view_cities_search);
+        searchView = view.findViewById(R.id.search_view_cities_search);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -100,6 +101,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     }
 
     @Override
+    public void setSearchText(String currentSearchText) {
+        searchView.setQuery(currentSearchText, false);
+    }
+
+    @Override
     public void showError() {
         errorTextView.setVisibility(View.VISIBLE);
     }
@@ -117,5 +123,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroyView();
     }
 }
