@@ -1,6 +1,5 @@
 package com.example.cities.presentation.about_app.presenter;
 
-import com.example.cities.data.ApplicationProvider;
 import com.example.cities.domain.about_app.AboutAppInfoInteractor;
 import com.example.cities.model.AboutInfoResult;
 import com.example.cities.presentation.about_app.About;
@@ -30,7 +29,7 @@ public class AboutPresenterImpl implements About.Presenter {
     private static final String TAG = "AboutPresenter";
 
     @Inject
-    public AboutPresenterImpl(About.View view, ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider, AboutAppInfoInteractor aboutAppInfoInteractor) {
+    AboutPresenterImpl(About.View view, SchedulerProvider schedulerProvider, AboutAppInfoInteractor aboutAppInfoInteractor) {
         this.aboutView = view;
         this.aboutAppInfoInteractor = aboutAppInfoInteractor;
         this.schedulerProvider = schedulerProvider;

@@ -20,6 +20,24 @@ public class AboutInfoResult {
         return data;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AboutInfoResult that = (AboutInfoResult) o;
+
+        if (resultCode != that.resultCode) return false;
+        return data != null ? data.equals(that.data) : that.data == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = resultCode != null ? resultCode.hashCode() : 0;
+        result = 31 * result + (data != null ? data.hashCode() : 0);
+        return result;
+    }
+
     @NotNull
     @Override
     public String toString() {

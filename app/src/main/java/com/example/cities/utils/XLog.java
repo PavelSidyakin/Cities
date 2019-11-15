@@ -4,7 +4,11 @@ import android.util.Log;
 
 public final class XLog {
 
-    private static boolean enabled = true; 
+    private static boolean enabled = true;
+
+    public static void enable(boolean enabled) {
+        XLog.enabled = enabled;
+    }
     
     public static void i(String tag, String message, Throwable throwable) {
         if (enabled) {

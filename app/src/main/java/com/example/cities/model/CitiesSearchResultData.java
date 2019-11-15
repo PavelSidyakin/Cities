@@ -16,6 +16,21 @@ public class CitiesSearchResultData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CitiesSearchResultData that = (CitiesSearchResultData) o;
+
+        return cityDataList != null ? cityDataList.equals(that.cityDataList) : that.cityDataList == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return cityDataList != null ? cityDataList.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return "CitiesSearchResultData{" +
                 "cityDataList=" + cityDataList +

@@ -16,7 +16,7 @@ public interface CitiesSearchInteractor {
      * error: no
      *
      * @param searchText Start letters in a city name.
-     * @param pageIndex Requested page index
+     * @param pageIndex 0-based requested page index
      * @param pageItemCount Requested page item count
      *
      * @return Single with {@link CitiesSearchResult}

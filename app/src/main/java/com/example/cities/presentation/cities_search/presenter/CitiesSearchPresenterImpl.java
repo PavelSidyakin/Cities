@@ -1,5 +1,6 @@
 package com.example.cities.presentation.cities_search.presenter;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.paging.PagedList;
 import androidx.paging.RxPagedListBuilder;
 
@@ -9,6 +10,7 @@ import com.example.cities.model.CitiesSearchResultCode;
 import com.example.cities.model.data.CityData;
 import com.example.cities.presentation.cities_search.CitiesSearch;
 import com.example.cities.presentation.cities_search.presenter.recycler.CitiesSearchDataSourceFactory;
+import com.example.cities.utils.Lazy;
 import com.example.cities.utils.XLog;
 import com.example.cities.utils.rx.SchedulerProvider;
 
@@ -20,6 +22,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.CompletableSubject;
 
 public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
 
@@ -39,28 +42,36 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     private ObservableEmitter<Object> retryObservableEmitter = null;
     private Observable<Object> retryObservable = Observable.create(emitter ->  retryObservableEmitter = emitter);
 
+    @VisibleForTesting
+    int initialPageSizeFactor = DEFAULT_INITIAL_PAGE_SIZE_FACTOR;
+    @VisibleForTesting
+    int pageSize = DEFAULT_PAGE_SIZE;
 
-    private int initialPageSizeFactor = DEFAULT_INITIAL_PAGE_SIZE_FACTOR;
-    private int pageSize = DEFAULT_PAGE_SIZE;
-    private long performSearchTimeoutMillis = DEFAULT_PERFORM_SEARCH_TIMEOUT_MILLIS;
+    @VisibleForTesting
+    long performSearchTimeoutMillis = DEFAULT_PERFORM_SEARCH_TIMEOUT_MILLIS;
 
     private static final String TAG = "CitiesSearchPresenter";
     private static final long DEFAULT_PERFORM_SEARCH_TIMEOUT_MILLIS = 500L;
 
-    private static final int DEFAULT_PAGE_SIZE = 50;
-    private static final int DEFAULT_INITIAL_PAGE_SIZE_FACTOR = 3;
+    @VisibleForTesting
+    static final int DEFAULT_PAGE_SIZE = 50;
+    @VisibleForTesting
+    static final int DEFAULT_INITIAL_PAGE_SIZE_FACTOR = 3;
 
-    private PagedList.Config pageListConfig = new PagedList.Config.Builder()
+    @VisibleForTesting
+    CompletableSubject requestCompletedCompletable = CompletableSubject.create();
+
+    private Lazy<PagedList.Config> pageListConfig = new Lazy<>(() -> new PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(initialPageSizeFactor * pageSize)
             .setEnablePlaceholders(false)
-            .build();
+            .build());
 
     @Inject
-    public CitiesSearchPresenterImpl(CitiesSearch.View view,
-                                     SchedulerProvider schedulerProvider,
-                                     CitiesSearchInteractor citiesSearchInteractor,
-                                     CitiesScreenInteractor citiesScreenInteractor) {
+    CitiesSearchPresenterImpl(CitiesSearch.View view,
+                              SchedulerProvider schedulerProvider,
+                              CitiesSearchInteractor citiesSearchInteractor,
+                              CitiesScreenInteractor citiesScreenInteractor) {
         this.view = view;
         this.schedulerProvider = schedulerProvider;
         this.citiesSearchInteractor = citiesSearchInteractor;
@@ -81,9 +92,11 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                 .switchMap(searchString -> buildRequestObservable(searchString) )
                 .subscribeOn(schedulerProvider.main())
                 .subscribe(cityDataPagedList -> {
-                        view.updateCityList(cityDataPagedList);
+                    view.updateCityList(cityDataPagedList);
+                    requestCompletedCompletable.onComplete();
                 }, throwable -> {
-                        XLog.w(TAG, "Error in search text chain", throwable);
+                    XLog.w(TAG, "Error in search text chain", throwable);
+                    requestCompletedCompletable.onError(throwable);
                 });
 
         compositeDisposable.add(searchTextDisposable);
@@ -129,16 +142,15 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     }
 
     private Observable<String> preProcessInputString(String searchString) {
-        return Observable.fromCallable(() -> searchString.isEmpty() )
-            .flatMap(isEmpty -> {
-                if(isEmpty) {
+        return Observable.fromCallable(() -> searchString.trim())
+            .flatMap(trimmedString -> {
+                if(trimmedString.isEmpty()) {
                     view.clearList();
                     return Observable.never();
                 } else {
-                    return Observable.just(searchString);
+                    return Observable.just(trimmedString);
                 }
             })
-            .map(searchString1 -> searchString1.trim())
             .subscribeOn(schedulerProvider.main());
     }
 
@@ -147,7 +159,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                 new CitiesSearchDataSourceFactory(searchString, retryObservable, this, schedulerProvider,citiesSearchInteractor, compositeDisposable, initialPageSizeFactor)
             )
             .flatMap(citiesSearchDataSourceFactory ->
-                new RxPagedListBuilder<>(citiesSearchDataSourceFactory, pageListConfig)
+                new RxPagedListBuilder<>(citiesSearchDataSourceFactory, pageListConfig.get())
                 .setNotifyScheduler(schedulerProvider.main())
                 .setFetchScheduler(schedulerProvider.io())
                 .buildObservable()
@@ -164,6 +176,10 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
 
     @Override
     public void onResult(CitiesSearchResultCode resultCode) {
+        if (resultCode != CitiesSearchResultCode.OK) {
+            view.showError();
+        }
+
         view.hideProgress();
     }
 

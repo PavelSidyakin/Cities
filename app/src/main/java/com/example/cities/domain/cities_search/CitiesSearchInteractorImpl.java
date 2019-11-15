@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
@@ -33,8 +34,11 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
     }
 
     public Single<CitiesSearchResult> requestCities(String searchText, int pageIndex, int pageItemCount) {
-        return Single.fromCallable(() ->  searchText.equalsIgnoreCase(currentSearchText))
-            .flatMap(hasResult -> hasResult ? returnFromCachedResult(pageIndex, pageItemCount) : findAndCacheResult(searchText, pageIndex, pageItemCount))
+        return checkInputParameters(searchText, pageIndex, pageItemCount)
+            .andThen(Single.fromCallable(() ->  searchText.equalsIgnoreCase(currentSearchText)))
+            .flatMapCompletable(hasResult -> !hasResult ? findAndCacheResult(searchText): Completable.complete())
+            .toSingleDefault(new Object())
+            .flatMap(o -> returnFromCachedResult(pageIndex, pageItemCount))
             .map(cityDataList -> new CitiesSearchResult(CitiesSearchResultCode.OK, new CitiesSearchResultData(cityDataList)))
             .doOnSubscribe(disposable -> XLog.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Subscribe. searchText=" + searchText + " pageIndex=" + pageIndex + " pageItemCount=" + pageItemCount))
             .doOnSuccess(result -> XLog.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Success. result code " + result.getResultCode() + " size " + result.getResultData().getCityDataList().size()))
@@ -46,6 +50,24 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
     private Single<List<CityData>> returnFromCachedResult(int pageIndex, int pageItemCount) {
         return Single.fromCallable(() -> getSublistFromCachedData(pageIndex, pageItemCount))
             .subscribeOn(schedulerProvider.computation());
+    }
+
+    private Completable checkInputParameters(String searchText, int pageIndex, int pageItemCount) {
+        return Completable.defer(() -> {
+            if (searchText == null || searchText.isEmpty() || searchText.trim().isEmpty()) {
+                return Completable.error(new RuntimeException("Empty or space-only string"));
+            }
+
+            if (pageIndex < 0) {
+                return Completable.error(new RuntimeException("Wrong page index: " + pageIndex));
+            }
+
+            if (pageItemCount <= 0) {
+                return Completable.error(new RuntimeException("Wrong page item count: " + pageItemCount));
+            }
+
+            return Completable.complete();
+        });
     }
 
     private List<CityData> getSublistFromCachedData(int pageIndex, int pageItemCount) {
@@ -60,11 +82,12 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
         return currentCityDataList.subList(startIndex, endIndex);
     }
 
-    private Single<List<CityData>> findAndCacheResult(String searchText, int pageIndex, int pageItemCount) {
+    private Completable findAndCacheResult(String searchText) {
         return Single.fromCallable(() -> findCityData(searchText))
-                .doOnSuccess(cityData -> currentCityDataList = cityData)
-                .doOnSuccess(cityData -> currentSearchText = searchText)
-                .subscribeOn(schedulerProvider.computation());
+            .doOnSuccess(cityData -> currentCityDataList = cityData)
+            .doOnSuccess(cityData -> currentSearchText = searchText)
+            .ignoreElement()
+            .subscribeOn(schedulerProvider.computation());
     }
 
     private List<CityData> findCityData(String searchText) {

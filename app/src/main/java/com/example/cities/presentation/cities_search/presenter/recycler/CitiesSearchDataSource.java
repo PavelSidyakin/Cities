@@ -62,7 +62,7 @@ public class CitiesSearchDataSource extends PageKeyedDataSource<Integer, CityDat
             .subscribe (citiesSearchResult -> {
                 if (citiesSearchResult.getResultCode() == CitiesSearchResultCode.OK) {
                     callback.onResult(citiesSearchResult.getResultData().getCityDataList(),
-                            null, initialPageSizeFactor + 1);
+                            null, initialPageSizeFactor);
                 } else {
                     setRetryAction(() -> loadInitial(params, callback));
                 }

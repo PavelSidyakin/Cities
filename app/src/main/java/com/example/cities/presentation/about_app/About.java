@@ -11,13 +11,6 @@ import io.reactivex.Single;
 
 public interface About {
 
-    // TODO: create interactor and repository
-    interface Data {
-
-        Single<AboutInfo> requestAboutInfo();
-
-    }
-
     interface Presenter {
 
         void onViewReady();

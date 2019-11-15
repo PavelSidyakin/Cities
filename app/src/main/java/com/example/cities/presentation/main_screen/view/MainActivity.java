@@ -34,7 +34,6 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
 
     private MainActivityDelegate mainActivityDelegate;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

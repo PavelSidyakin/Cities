@@ -16,6 +16,21 @@ public class AboutInfoResultData {
         return aboutInfo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AboutInfoResultData that = (AboutInfoResultData) o;
+
+        return aboutInfo != null ? aboutInfo.equals(that.aboutInfo) : that.aboutInfo == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return aboutInfo != null ? aboutInfo.hashCode() : 0;
+    }
+
     @NotNull
     @Override
     public String toString() {
