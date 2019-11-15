@@ -139,6 +139,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                     return Observable.just(searchString);
                 }
             })
+            .map(searchString1 -> searchString1.trim())
             .subscribeOn(schedulerProvider.main());
     }
 
