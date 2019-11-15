@@ -3,7 +3,7 @@ package com.example.cities.di.app;
 import com.example.cities.data.ApplicationProviderImpl;
 import com.example.cities.data.CitiesRepositoryImpl;
 import com.example.cities.data.CitiesScreenRepositoryImpl;
-import com.example.cities.domain.ApplicationProvider;
+import com.example.cities.data.ApplicationProvider;
 import com.example.cities.domain.cities_search.CitiesRepository;
 import com.example.cities.domain.cities_search.CitiesScreenInteractor;
 import com.example.cities.domain.cities_search.CitiesScreenInteractorImpl;

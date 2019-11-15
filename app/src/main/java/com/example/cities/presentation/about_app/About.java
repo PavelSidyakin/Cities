@@ -1,6 +1,6 @@
 package com.example.cities.presentation.about_app;
 
-import com.example.cities.model.AboutInfo;
+import com.example.cities.model.data.AboutInfo;
 
 import io.reactivex.Single;
 

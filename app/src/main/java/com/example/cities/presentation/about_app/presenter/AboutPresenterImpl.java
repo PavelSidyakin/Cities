@@ -1,9 +1,10 @@
 package com.example.cities.presentation.about_app.presenter;
 
-import com.example.cities.domain.ApplicationProvider;
+import com.example.cities.data.ApplicationProvider;
+import com.example.cities.domain.about_app.AboutAppInfoInteractor;
+import com.example.cities.model.AboutInfoResult;
 import com.example.cities.presentation.about_app.About;
-import com.example.cities.model.AboutInfo;
-import com.example.cities.utils.XLog;
+import com.example.cities.model.data.AboutInfo;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.concurrent.TimeUnit;
@@ -20,8 +21,8 @@ import io.reactivex.disposables.Disposable;
 
 public class AboutPresenterImpl implements About.Presenter {
 
-    private final About.View aboutViewRef;
-    private final About.Data aboutData;
+    private final About.View aboutView;
+    private final AboutAppInfoInteractor aboutAppInfoInteractor;
     private final SchedulerProvider schedulerProvider;
 
     private Disposable requestAboutInfoDisposable;
@@ -29,53 +30,50 @@ public class AboutPresenterImpl implements About.Presenter {
     private static final String TAG = "AboutPresenter";
 
     @Inject
-    public AboutPresenterImpl(About.View view, ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider) {
-        this.aboutViewRef = view;
-        this.aboutData = new AboutDataImpl(applicationProvider, schedulerProvider);
+    public AboutPresenterImpl(About.View view, ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider, AboutAppInfoInteractor aboutAppInfoInteractor) {
+        this.aboutView = view;
+        this.aboutAppInfoInteractor = aboutAppInfoInteractor;
         this.schedulerProvider = schedulerProvider;
     }
 
     @Override
     public void onViewReady() {
-        About.View aboutView = aboutViewRef;
-        if (aboutView != null) {
-            aboutView.showProgress();
-        }
+        aboutView.showProgress();
 
         requestAboutInfoDisposable = Completable.timer(1000, TimeUnit.MILLISECONDS)
-            .andThen(Single.defer(() -> aboutData.requestAboutInfo() ))
+            .andThen(Single.defer(() -> aboutAppInfoInteractor.requestAboutInfo() ))
             .observeOn(schedulerProvider.main())
             .subscribeOn(schedulerProvider.io())
             .doFinally(() -> requestAboutInfoDisposable = null)
-            .subscribe(aboutInfo -> onSuccess(aboutInfo),
-                throwable -> {
-                    XLog.w(TAG, "AboutPresenterImpl.onViewReady() Failed", throwable);
-                    onFail();
-            });
+            .subscribe(aboutInfoResult -> processAboutInfoResult(aboutInfoResult));
+    }
+
+    private void processAboutInfoResult(AboutInfoResult aboutInfoResult) {
+        switch (aboutInfoResult.getResultCode()) {
+            case OK:
+                onSuccess(aboutInfoResult.getData().getAboutInfo());
+                break;
+            case ERROR:
+            default:
+                onFail();
+                break;
+        }
     }
 
     @Override
     public void onSuccess(AboutInfo aboutInfo) {
-        About.View aboutViewImpl = aboutViewRef;
-
-        if (aboutViewImpl != null) {
-            aboutViewImpl.hideProgress();
-            aboutViewImpl.setCompanyName(aboutInfo.getCompanyName());
-            aboutViewImpl.setCompanyAddress(aboutInfo.getCompanyAddress());
-            aboutViewImpl.setCompanyPostalCode(aboutInfo.getCompanyPostal());
-            aboutViewImpl.setCompanyCity(aboutInfo.getCompanyCity());
-            aboutViewImpl.setAboutInfo(aboutInfo.getAboutInfo());
-        }
-
+        aboutView.hideProgress();
+        aboutView.setCompanyName(aboutInfo.getCompanyName());
+        aboutView.setCompanyAddress(aboutInfo.getCompanyAddress());
+        aboutView.setCompanyPostalCode(aboutInfo.getCompanyPostal());
+        aboutView.setCompanyCity(aboutInfo.getCompanyCity());
+        aboutView.setAboutInfo(aboutInfo.getAboutInfo());
     }
 
     @Override
     public void onFail() {
-        About.View aboutViewImpl = aboutViewRef;
-        if (aboutViewImpl != null) {
-            aboutViewImpl.hideProgress();
-            aboutViewImpl.showError();
-        }
+        aboutView.hideProgress();
+        aboutView.showError();
     }
 
     @Override

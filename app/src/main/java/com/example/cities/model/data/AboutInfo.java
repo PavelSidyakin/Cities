@@ -1,4 +1,4 @@
-package com.example.cities.model;
+package com.example.cities.model.data;
 
 /**
  * Created by Backbase R&D B.V on 28/06/2018.

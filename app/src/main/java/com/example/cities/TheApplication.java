@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.example.cities.di.app.AppComponent;
 import com.example.cities.di.app.DaggerAppComponent;
-import com.example.cities.domain.ApplicationProvider;
+import com.example.cities.data.ApplicationProvider;
 import com.example.cities.domain.initialization.impl.InitializationHelper;
 
 import javax.inject.Inject;

@@ -3,7 +3,6 @@ package com.example.cities.data;
 import android.content.Context;
 
 import com.example.cities.TheApplication;
-import com.example.cities.domain.ApplicationProvider;
 
 import javax.inject.Inject;
 

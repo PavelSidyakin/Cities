@@ -1,4 +1,4 @@
-package com.example.cities.domain;
+package com.example.cities.data;
 
 import android.content.Context;
 

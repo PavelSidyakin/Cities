@@ -1,10 +1,9 @@
-package com.example.cities.presentation.about_app.presenter;
+package com.example.cities.data;
 
 import android.content.res.AssetManager;
 
-import com.example.cities.domain.ApplicationProvider;
-import com.example.cities.presentation.about_app.About;
-import com.example.cities.model.AboutInfo;
+import com.example.cities.domain.about_app.AboutAppInfoRepository;
+import com.example.cities.model.data.AboutInfo;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import org.json.JSONException;
@@ -13,33 +12,30 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 
-/**
- * Created by Backbase R&D B.V on 28/06/2018.
- */
+public class AboutAppInfoRepositoryImpl implements AboutAppInfoRepository {
 
-public class AboutDataImpl implements About.Data {
-
-    private static final String TAG = AboutDataImpl.class.getSimpleName();
     private final ApplicationProvider applicationProvider;
     private final SchedulerProvider schedulerProvider;
 
     private static final String FILE_NAME = "aboutInfo.json";
 
-    AboutDataImpl(ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider){
+    @Inject
+    AboutAppInfoRepositoryImpl(ApplicationProvider applicationProvider, SchedulerProvider schedulerProvider) {
         this.applicationProvider = applicationProvider;
         this.schedulerProvider = schedulerProvider;
     }
 
     @Override
     public Single<AboutInfo> requestAboutInfo() {
-
         return Single.fromCallable(() -> getAboutInfoFromAssets())
-                .flatMap(aboutInfoJsonStr -> aboutInfoJsonStr.isEmpty() ?
-                        Single.error(new RuntimeException("Empty about info"))
-                        :  Single.fromCallable(() -> parseAboutInfo(aboutInfoJsonStr)))
-                .subscribeOn(schedulerProvider.io());
+            .flatMap(aboutInfoJsonStr -> aboutInfoJsonStr.isEmpty() ?
+                    Single.error(new RuntimeException("Empty about info"))
+                    :  Single.fromCallable(() -> parseAboutInfo(aboutInfoJsonStr)))
+            .subscribeOn(schedulerProvider.io());
     }
 
     private AboutInfo parseAboutInfo(String aboutInfoJson) {
@@ -59,7 +55,6 @@ public class AboutDataImpl implements About.Data {
     }
 
     private String getAboutInfoFromAssets() {
-
         try{
             AssetManager manager = applicationProvider.getApplicationContext().getAssets();
             InputStream file = manager.open(FILE_NAME);
