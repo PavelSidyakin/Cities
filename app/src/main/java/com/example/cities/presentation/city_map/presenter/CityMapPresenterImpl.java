@@ -34,6 +34,11 @@ public class CityMapPresenterImpl implements CityMap.Presenter {
         viewReadySubject.onComplete();
     }
 
+    @Override
+    public void onBackClicked() {
+        view.showCitiesSearchScreen();
+    }
+
     private void navigateAndAddCityMarker(CityData cityData) {
         view.navigateToCity(cityData.getCityCoordinates());
         view.addCityMarker(cityData.getCityCoordinates(), cityData.getName());

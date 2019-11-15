@@ -69,9 +69,14 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     }
 
     private void cleanUpOnConfigChanges() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            fragmentTransaction.remove(fragment);
         }
+
+        fragmentTransaction.commitNow();
 
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -118,11 +123,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     @Override
     public void showCityInfoScreen() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.add(new CityInfoFragment(), CityInfoFragment.FRAGMENT_TAG);
-
-        fragmentTransaction.commit();
+        new CityInfoFragment().show(fragmentManager, CityInfoFragment.FRAGMENT_TAG);
     }
 
     @Override

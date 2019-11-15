@@ -7,6 +7,8 @@ public interface CityMap {
     interface Presenter {
         void onViewReady();
 
+        void onBackClicked();
+
         void onDestroyView();
 
     }
@@ -16,6 +18,8 @@ public interface CityMap {
         void navigateToCity(CityCoordinates coordinates);
 
         void addCityMarker(CityCoordinates coordinates, String title);
+
+        void showCitiesSearchScreen();
 
 
     }

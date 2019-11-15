@@ -1,5 +1,6 @@
 package com.example.cities.presentation.cities_search.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,6 +62,15 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        Activity activity = getActivity();
+        if (activity instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.hide();
+            }
+        }
+
         citiesRecyclerView = view.findViewById(R.id.recycler_list_cities_search);
         createAndSetAdapter();
 
@@ -82,16 +94,6 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
                 return true;
             }
         });
-
-//        citiesRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view1, position) -> {
-//            CityData cityData = getCityDataByPosition(position);
-//
-//            if (cityData == null) {
-//                return;
-//            }
-//
-//            presenter.onCityClicked(cityData);
-//        }));
 
         presenter.onViewReady();
     }
