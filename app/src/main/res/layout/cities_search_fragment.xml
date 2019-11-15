@@ -7,14 +7,29 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view_cities_search"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:queryHint="@string/cities_search_view_hint"
         app:iconifiedByDefault="false"
         app:defaultQueryHint="@string/cities_search_view_hint"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/image_view_help_cities_search"/>
+
+    <ImageView
+        android:id="@+id/image_view_help_cities_search"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_help_outline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progress_bar_cities_search"
+        app:layout_constraintStart_toEndOf="@id/search_view_cities_search"/>
 
     <ProgressBar
         android:id="@+id/progress_bar_cities_search"
