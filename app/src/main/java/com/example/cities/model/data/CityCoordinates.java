@@ -10,6 +10,11 @@ public class CityCoordinates {
     @SerializedName("lat")
     private double lat;
 
+    public CityCoordinates(double lon, double lat) {
+        this.lon = lon;
+        this.lat = lat;
+    }
+
     public double getLng() {
         return lon;
     }

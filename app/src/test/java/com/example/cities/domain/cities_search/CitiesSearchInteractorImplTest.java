@@ -283,6 +283,17 @@ class CitiesSearchInteractorImplTest {
         }
     }
 
+    @Test
+    @DisplayName("When search text is not found, should return empty list")
+    void pagingTest4() throws InterruptedException {
+        List<CityData> expectedList = Collections.emptyList();
+
+        // action
+        citiesSearchInteractor.requestCities("ddd", 0, 10)
+                .test()
+                .await()
+                .assertResult(new CitiesSearchResult(CitiesSearchResultCode.OK, new CitiesSearchResultData(expectedList)));
+    }
 
     private List<CityData> createSortedListOfCityData() {
         return Arrays.asList(

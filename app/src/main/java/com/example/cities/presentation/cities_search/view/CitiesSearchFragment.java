@@ -75,7 +75,7 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
         errorTextView = view.findViewById(R.id.text_view_error_cities_search);
         progressBar = view.findViewById(R.id.progress_bar_cities_search);
 
-        errorTextView.setOnClickListener(v -> presenter.retry());
+        errorTextView.setOnClickListener(v -> presenter.onRetryClicked());
 
         searchView = view.findViewById(R.id.search_view_cities_search);
 

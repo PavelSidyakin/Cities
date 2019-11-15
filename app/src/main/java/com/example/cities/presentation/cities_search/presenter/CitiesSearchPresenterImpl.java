@@ -31,7 +31,8 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     private final CitiesSearchInteractor citiesSearchInteractor;
     private final CitiesScreenInteractor citiesScreenInteractor;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    @VisibleForTesting
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private ObservableEmitter<String> performSearchObservableEmitter = null;
     private Observable<String> performSearchObservable = Observable.create(emitter -> performSearchObservableEmitter = emitter);
@@ -137,7 +138,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     }
 
     @Override
-    public void retry() {
+    public void onRetryClicked() {
         retryObservableEmitter.onNext(new Object());
     }
 

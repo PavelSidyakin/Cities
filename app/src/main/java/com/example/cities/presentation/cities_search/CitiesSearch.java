@@ -17,7 +17,7 @@ public interface CitiesSearch {
         void onCityClicked(CityData cityData);
         void onCityInfoClicked(CityData cityData);
 
-        void retry();
+        void onRetryClicked();
 
         void onRequestStarted();
         void onResult(CitiesSearchResultCode resultCode);
