@@ -26,7 +26,6 @@ public class TheApplication extends Application implements HasAndroidInjector {
     @Inject
     InitializationHelper initializationHelper;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,13 +37,11 @@ public class TheApplication extends Application implements HasAndroidInjector {
         applicationProvider.init(this);
 
         initializationHelper.launchInitialization();
-
     }
 
     public static AppComponent getAppComponent() {
         return appComponent;
     }
-
 
     @Override
     public AndroidInjector<Object> androidInjector() {

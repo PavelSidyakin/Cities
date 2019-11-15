@@ -19,7 +19,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class MainActivityModule {
+abstract class MainActivityModule {
 
     @CitiesSearchFragmentScope
     @ContributesAndroidInjector(modules = { CitiesSearchFragmentModule.class, CitiesSearchModule.class })

@@ -6,23 +6,20 @@ import com.example.cities.presentation.city_map.CityMap;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.CompletableSubject;
 
 public class CityMapPresenterImpl implements CityMap.Presenter {
 
     private final CityMap.View view;
-    private final CitiesScreenInteractor citiesScreenInteractor;
 
     private CompletableSubject viewReadySubject = CompletableSubject.create();
 
     private Disposable observeCityDisposable;
 
     @Inject
-    CityMapPresenterImpl(CityMap.View view, CitiesScreenInteractor citiesScreenInteractor){
+    CityMapPresenterImpl(CityMap.View view, CitiesScreenInteractor citiesScreenInteractor) {
         this.view = view;
-        this.citiesScreenInteractor = citiesScreenInteractor;
 
         observeCityDisposable = citiesScreenInteractor.observeCitySelection()
                 .flatMap(cityData -> viewReadySubject.toSingleDefault(cityData).toObservable())
@@ -51,6 +48,5 @@ public class CityMapPresenterImpl implements CityMap.Presenter {
             observeCityDisposable.dispose();
             observeCityDisposable = null;
         }
-
     }
 }

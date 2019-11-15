@@ -27,5 +27,4 @@ public class CityInfoPresenterImpl implements CityInfo.Presenter {
             view.setCoordinates(cityData.getCityCoordinates());
         }
     }
-
 }

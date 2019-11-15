@@ -5,7 +5,9 @@ import com.example.cities.model.data.CityCoordinates;
 public interface CityInfo {
 
     interface Presenter {
+
         void onViewReady();
+
     }
 
     interface View {
@@ -15,4 +17,5 @@ public interface CityInfo {
         void setCoordinates(CityCoordinates coordinates);
 
     }
+
 }

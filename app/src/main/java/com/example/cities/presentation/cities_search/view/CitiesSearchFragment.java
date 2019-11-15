@@ -1,7 +1,6 @@
 package com.example.cities.presentation.cities_search.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.example.cities.model.data.CityData;
 import com.example.cities.presentation.cities_search.CitiesSearch;
 import com.example.cities.presentation.cities_search.view.recycler.CityListAdapter;
 import com.example.cities.presentation.main_screen.MainScreen;
-import com.example.cities.utils.recyclerview.RecyclerItemClickListener;
 
 import javax.inject.Inject;
 
@@ -136,7 +134,6 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
         });
 
         citiesRecyclerView.setAdapter(cityListAdapter);
-
     }
 
     @Nullable
@@ -148,7 +145,6 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
         }
 
         return cityListAdapter.getCurrentList().get(position);
-
     }
 
     @Override

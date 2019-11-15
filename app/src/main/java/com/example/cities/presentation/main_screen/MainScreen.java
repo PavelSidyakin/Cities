@@ -3,8 +3,10 @@ package com.example.cities.presentation.main_screen;
 public interface MainScreen {
 
     interface Presenter {
+
         void onViewReady();
         void onDestroyView();
+
     }
 
     interface View {
@@ -20,4 +22,5 @@ public interface MainScreen {
         void showAboutAppScreen();
 
     }
+
 }

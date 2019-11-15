@@ -53,7 +53,6 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         showActionBarIfNeeded();
 
         view.findViewById(R.id.image_view_toolbar_back_city_map).setOnClickListener(v -> presenter.onBackClicked());
@@ -74,24 +73,27 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
     private void showActionBarIfNeeded() {
         Activity activity = getActivity();
 
-        if (activity instanceof AppCompatActivity) {
-            ((AppCompatActivity) activity).setSupportActionBar(getView().findViewById(R.id.toolbar_city_map));
-            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
-            if (actionBar != null) {
-
-                int displayMode = getResources().getConfiguration().orientation;
-
-                boolean isLandscape = displayMode == Configuration.ORIENTATION_LANDSCAPE;
-
-                if (isLandscape) {
-                    actionBar.hide();
-                } else {
-                    actionBar.setDisplayShowTitleEnabled(false);
-                    actionBar.show();
-                }
-            }
+        if (!(activity instanceof AppCompatActivity)) {
+            return;
         }
 
+        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+
+        appCompatActivity.setSupportActionBar(getView().findViewById(R.id.toolbar_city_map));
+        ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        if (actionBar != null) {
+
+            int displayMode = getResources().getConfiguration().orientation;
+
+            boolean isLandscape = displayMode == Configuration.ORIENTATION_LANDSCAPE;
+
+            if (isLandscape) {
+                actionBar.hide();
+            } else {
+                actionBar.setDisplayShowTitleEnabled(false);
+                actionBar.show();
+            }
+        }
     }
 
     @Override
@@ -124,5 +126,4 @@ public class CityMapFragment extends DaggerFragment implements CityMap.View, OnM
 
         presenter.onViewReady();
     }
-
 }

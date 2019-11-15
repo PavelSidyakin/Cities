@@ -3,17 +3,13 @@ package com.example.cities.presentation.cities_search.view.recycler;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cities.R;
 import com.example.cities.model.data.CityData;
 
 public class CityListAdapter extends PagedListAdapter<CityData, RecyclerView.ViewHolder> {
-
-
 
     private static final DiffUtil.ItemCallback<CityData> cityDataDiffCallback = new DiffUtil.ItemCallback<CityData>() {
         @Override

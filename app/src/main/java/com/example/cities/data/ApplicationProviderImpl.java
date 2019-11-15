@@ -12,7 +12,7 @@ public class ApplicationProviderImpl implements ApplicationProvider {
     private TheApplication theApplication;
 
     @Inject
-    public ApplicationProviderImpl() {
+    ApplicationProviderImpl() {
     }
 
     @Override

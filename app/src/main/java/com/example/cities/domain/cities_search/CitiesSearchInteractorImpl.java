@@ -1,11 +1,10 @@
 package com.example.cities.domain.cities_search;
 
-import android.util.Log;
-
 import com.example.cities.model.CitiesSearchResult;
 import com.example.cities.model.CitiesSearchResultCode;
 import com.example.cities.model.CitiesSearchResultData;
 import com.example.cities.model.data.CityData;
+import com.example.cities.utils.XLog;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -35,12 +34,13 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
 
     public Single<CitiesSearchResult> requestCities(String searchText, int pageIndex, int pageItemCount) {
         return Single.fromCallable(() ->  searchText.equalsIgnoreCase(currentSearchText))
-                .flatMap(hasResult -> hasResult ? returnFromCachedResult(pageIndex, pageItemCount) : findAndCacheResult(searchText, pageIndex, pageItemCount))
-                .map(cityDataList -> new CitiesSearchResult(CitiesSearchResultCode.OK, new CitiesSearchResultData(cityDataList)))
-                .doOnSubscribe(disposable -> Log.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Subscribe. searchText=" + searchText + " pageIndex=" + pageIndex + " pageItemCount=" + pageItemCount))
-                .doOnSuccess(result -> Log.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Success. result=" + result))
-                .doOnError(throwable -> Log.w(TAG, "CitiesSearchInteractorImpl.requestCities(): Error", throwable))
-                .subscribeOn(schedulerProvider.computation());
+            .flatMap(hasResult -> hasResult ? returnFromCachedResult(pageIndex, pageItemCount) : findAndCacheResult(searchText, pageIndex, pageItemCount))
+            .map(cityDataList -> new CitiesSearchResult(CitiesSearchResultCode.OK, new CitiesSearchResultData(cityDataList)))
+            .doOnSubscribe(disposable -> XLog.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Subscribe. searchText=" + searchText + " pageIndex=" + pageIndex + " pageItemCount=" + pageItemCount))
+            .doOnSuccess(result -> XLog.i(TAG, "CitiesSearchInteractorImpl.requestCities(): Success. result code " + result.getResultCode() + " size " + result.getResultData().getCityDataList().size()))
+            .doOnError(throwable -> XLog.w(TAG, "CitiesSearchInteractorImpl.requestCities(): Error", throwable))
+            .onErrorResumeNext(throwable -> Single.just(new CitiesSearchResult(CitiesSearchResultCode.ERROR, null)))
+            .subscribeOn(schedulerProvider.computation());
     }
 
     private Single<List<CityData>> returnFromCachedResult(int pageIndex, int pageItemCount) {
@@ -49,13 +49,13 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
     }
 
     private List<CityData> getSublistFromCachedData(int pageIndex, int pageItemCount) {
-        Log.i(TAG, "getSublistFromCachedData() pageIndex=" + pageIndex + " pageItemCount=" + pageItemCount);
-        Log.i(TAG, "getSublistFromCachedData() currentCityDataList size=" + currentCityDataList.size());
+        XLog.i(TAG, "getSublistFromCachedData() pageIndex=" + pageIndex + " pageItemCount=" + pageItemCount);
+        XLog.i(TAG, "getSublistFromCachedData() currentCityDataList size=" + currentCityDataList.size());
 
         int startIndex = Math.min(pageIndex * pageItemCount, currentCityDataList.size());
         int endIndex = Math.min(pageIndex * pageItemCount + pageItemCount, currentCityDataList.size());
 
-        Log.i(TAG, "getSublistFromCachedData() startIndex=" + startIndex + " endIndex=" + endIndex);
+        XLog.i(TAG, "getSublistFromCachedData() startIndex=" + startIndex + " endIndex=" + endIndex);
 
         return currentCityDataList.subList(startIndex, endIndex);
     }
@@ -79,13 +79,13 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
 
         List<CityData> sortedListOfCityData = citiesSearchPreLoadInteractor.getSortedListOfCityData();
 
-        Log.i(TAG, "findCityData() sortedListOfCityData.size() = " + sortedListOfCityData.size());
+        XLog.i(TAG, "findCityData() sortedListOfCityData.size() = " + sortedListOfCityData.size());
 
         int foundIndex = Collections.binarySearch(sortedListOfCityData,
-                new CityData(searchText, null, null, 0), // We don't care about other properties
+                new CityData(searchText, null, null, 0), // We don't care about other properties in CityData
                 comparator);
 
-        Log.i(TAG, "findCityData() foundIndex=" + foundIndex);
+        XLog.i(TAG, "findCityData() foundIndex=" + foundIndex);
 
         if (foundIndex < 0) {
             return new ArrayList<>();
@@ -103,7 +103,7 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
             }
         }
 
-        Log.i(TAG, "findCityData() startIndexOfList=" + startIndexOfList);
+        XLog.i(TAG, "findCityData() startIndexOfList=" + startIndexOfList);
 
         int lastIndexOfList = foundIndex;
         for (int i = lastIndexOfList + 1; i < sortedListOfCityData.size(); ++i) {
@@ -114,7 +114,7 @@ public class CitiesSearchInteractorImpl implements CitiesSearchInteractor {
             }
         }
 
-        Log.i(TAG, "findCityData() lastIndexOfList=" + lastIndexOfList);
+        XLog.i(TAG, "findCityData() lastIndexOfList=" + lastIndexOfList);
 
         return sortedListOfCityData.subList(startIndexOfList, lastIndexOfList + 1);
     }

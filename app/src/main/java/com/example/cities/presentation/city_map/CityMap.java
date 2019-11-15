@@ -5,6 +5,7 @@ import com.example.cities.model.data.CityCoordinates;
 public interface CityMap {
 
     interface Presenter {
+
         void onViewReady();
 
         void onBackClicked();
@@ -21,6 +22,6 @@ public interface CityMap {
 
         void showCitiesSearchScreen();
 
-
     }
+
 }

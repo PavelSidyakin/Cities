@@ -30,7 +30,7 @@ public class CityInfoFragment extends DaggerDialogFragment implements CityInfo.V
     private TextView textViewLongitude;
 
     @Inject
-    public CityInfoFragment(){
+    public CityInfoFragment() {
     }
 
     @Nullable
@@ -65,5 +65,4 @@ public class CityInfoFragment extends DaggerDialogFragment implements CityInfo.V
         textViewLatitude.setText(getString(R.string.city_info_latitude_mask, coordinates.getLat()));
         textViewLongitude.setText(getString(R.string.city_info_longitude_mask, coordinates.getLng()));
     }
-
 }

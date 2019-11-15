@@ -8,6 +8,7 @@ import com.example.cities.model.data.CityData;
 public interface CitiesSearch {
 
     interface Presenter {
+
         void onViewReady();
 
         void onSearchTextChanged(String searchText);
@@ -24,6 +25,7 @@ public interface CitiesSearch {
         void onAboutAppClicked();
 
         void onDestroyView();
+
     }
 
     interface View {
@@ -44,4 +46,5 @@ public interface CitiesSearch {
         void hideProgress();
 
     }
+
 }

@@ -1,7 +1,5 @@
 package com.example.cities.presentation.cities_search.presenter;
 
-import android.util.Log;
-
 import androidx.paging.PagedList;
 import androidx.paging.RxPagedListBuilder;
 
@@ -11,6 +9,7 @@ import com.example.cities.model.CitiesSearchResultCode;
 import com.example.cities.model.data.CityData;
 import com.example.cities.presentation.cities_search.CitiesSearch;
 import com.example.cities.presentation.cities_search.presenter.recycler.CitiesSearchDataSourceFactory;
+import com.example.cities.utils.XLog;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.concurrent.TimeUnit;
@@ -76,7 +75,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                     submitSearchObservable,
                     performSearchObservable.debounce(performSearchTimeoutMillis, TimeUnit.MILLISECONDS))
                 .flatMap(searchString ->preProcessInputString(searchString))
-                .doOnNext(searchString -> Log.i(TAG, "Filtered search string: " + searchString))
+                .doOnNext(searchString -> XLog.i(TAG, "Filtered search string: " + searchString))
                 .distinctUntilChanged()
                 .doOnNext(searchString -> citiesScreenInteractor.setCurrentSearchText(searchString))
                 .switchMap(searchString -> buildRequestObservable(searchString) )
@@ -84,7 +83,7 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                 .subscribe(cityDataPagedList -> {
                         view.updateCityList(cityDataPagedList);
                 }, throwable -> {
-                        Log.w(TAG, "Error in search text chain", throwable);
+                        XLog.w(TAG, "Error in search text chain", throwable);
                 });
 
         compositeDisposable.add(searchTextDisposable);
@@ -153,9 +152,9 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
                 .setFetchScheduler(schedulerProvider.io())
                 .buildObservable()
             )
-            .doOnSubscribe(disposable -> Log.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Subscribe. "))
-            .doOnNext(result -> Log.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Success. result=" + result))
-            .doOnError(throwable -> Log.w(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Error", throwable));
+            .doOnSubscribe(disposable -> XLog.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Subscribe. "))
+            .doOnNext(result -> XLog.i(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Success. result=" + result))
+            .doOnError(throwable -> XLog.w(TAG, "CitiesSearchPresenterImpl.buildRequestObservable(): Error", throwable));
     }
 
     @Override

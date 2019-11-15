@@ -1,8 +1,7 @@
 package com.example.cities.domain.cities_search;
 
-import android.util.Log;
-
 import com.example.cities.model.data.CityData;
+import com.example.cities.utils.XLog;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -31,17 +30,17 @@ public class CitiesSearchPreLoadInteractorImpl implements CitiesSearchPreLoadInt
     @Override
     public Completable preLoad() {
         return citiesRepository.getCitiesData()
-                .map(citiesData -> citiesData.getCityDataList())
-                .map(cityDataList -> {
-                    Collections.sort(cityDataList, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
-                    return cityDataList;
-                })
-                .map(sortedList -> sortedCityList = sortedList)
-                .subscribeOn(schedulerProvider.computation())
-                .doOnSubscribe(disposable -> Log.i(TAG, "CitiesSearchInteractorImpl.init(): Subscribe. "))
-                .doOnSuccess(result -> Log.i(TAG, "CitiesSearchInteractorImpl.init(): Success. result=" + result))
-                .doOnError(throwable -> Log.w(TAG, "CitiesSearchInteractorImpl.init(): Error", throwable))
-                .ignoreElement();
+            .map(citiesData -> citiesData.getCityDataList())
+            .map(cityDataList -> {
+                Collections.sort(cityDataList, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+                return cityDataList;
+            })
+            .map(sortedList -> sortedCityList = sortedList)
+            .subscribeOn(schedulerProvider.computation())
+            .doOnSubscribe(disposable -> XLog.i(TAG, "CitiesSearchInteractorImpl.init(): Subscribe. "))
+            .doOnSuccess(result -> XLog.i(TAG, "CitiesSearchInteractorImpl.init(): Success. result=" + result))
+            .doOnError(throwable -> XLog.w(TAG, "CitiesSearchInteractorImpl.init(): Error", throwable))
+            .ignoreElement();
     }
 
     @Override

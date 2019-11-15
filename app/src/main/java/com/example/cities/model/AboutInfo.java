@@ -52,4 +52,15 @@ public class AboutInfo {
     public void setAboutInfo(String aboutInfo) {
         this.aboutInfo = aboutInfo;
     }
+
+    @Override
+    public String toString() {
+        return "AboutInfo{" +
+                "companyName='" + companyName + '\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", companyPostal='" + companyPostal + '\'' +
+                ", companyCity='" + companyCity + '\'' +
+                ", aboutInfo='" + aboutInfo + '\'' +
+                '}';
+    }
 }

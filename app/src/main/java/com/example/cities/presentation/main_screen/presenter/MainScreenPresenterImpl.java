@@ -17,9 +17,9 @@ public class MainScreenPresenterImpl implements MainScreen.Presenter {
     private Disposable waitInitializationDisposable;
 
     @Inject
-    public MainScreenPresenterImpl(MainScreen.View view,
-                                   InitializationInteractor initializationInteractor,
-                                   SchedulerProvider schedulerProvider) {
+    MainScreenPresenterImpl(MainScreen.View view,
+                            InitializationInteractor initializationInteractor,
+                            SchedulerProvider schedulerProvider) {
         this.view = view;
         this.initializationInteractor = initializationInteractor;
         this.schedulerProvider = schedulerProvider;

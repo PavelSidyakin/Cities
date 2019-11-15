@@ -1,8 +1,7 @@
 package com.example.cities.domain.initialization.impl;
 
-import android.util.Log;
-
 import com.example.cities.domain.cities_search.CitiesSearchPreLoadInteractor;
+import com.example.cities.utils.XLog;
 import com.example.cities.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
@@ -32,9 +31,9 @@ public class InitializationHelperImpl implements InitializationHelper {
         Completable.defer(() -> citiesSearchPreLoadInteractor.preLoad())
             .doOnComplete(() -> initializationProgressHolder.onInitializationCompleted())
             .doOnError(throwable -> initializationProgressHolder.onInitializationFailed(throwable))
-            .doOnSubscribe(disposable -> Log.i(TAG, "InitializationHelperImpl.launchInitialization(): Subscribe. "))
-            .doOnComplete(() -> Log.i(TAG, "InitializationHelperImpl.launchInitialization(): Completed."))
-            .doOnError(throwable -> Log.w(TAG, "InitializationHelperImpl.launchInitialization(): Error", throwable))
+            .doOnSubscribe(disposable -> XLog.i(TAG, "InitializationHelperImpl.launchInitialization(): Subscribe. "))
+            .doOnComplete(() -> XLog.i(TAG, "InitializationHelperImpl.launchInitialization(): Completed."))
+            .doOnError(throwable -> XLog.w(TAG, "InitializationHelperImpl.launchInitialization(): Error", throwable))
             .subscribeOn(schedulerProvider.io())
             .subscribe();
     }

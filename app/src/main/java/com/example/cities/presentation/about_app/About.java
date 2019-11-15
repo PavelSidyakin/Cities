@@ -13,17 +13,22 @@ public interface About {
 
     // TODO: create interactor and repository
     interface Data {
+
         Single<AboutInfo> requestAboutInfo();
+
     }
 
     interface Presenter {
+
         void onViewReady();
         void onSuccess(AboutInfo aboutInfo);
         void onFail();
         void onDestroyView();
+
     }
 
     interface View {
+
         void setCompanyName(String companyName);
         void setCompanyAddress(String companyAddress);
         void setCompanyPostalCode(String postalCode);
@@ -32,5 +37,7 @@ public interface About {
         void showError();
         void showProgress();
         void hideProgress();
+
     }
+
 }

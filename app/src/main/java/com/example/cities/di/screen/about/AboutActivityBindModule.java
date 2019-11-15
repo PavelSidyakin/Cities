@@ -11,4 +11,5 @@ public abstract class AboutActivityBindModule {
     @AboutActivityScope
     @ContributesAndroidInjector(modules = {AboutActivityModule.class})
     abstract AboutActivity bindAboutActivity();
+
 }

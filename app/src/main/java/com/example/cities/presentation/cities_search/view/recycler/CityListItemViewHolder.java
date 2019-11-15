@@ -12,7 +12,6 @@ import com.example.cities.R;
 import com.example.cities.model.data.CityCoordinates;
 import com.example.cities.model.data.CityData;
 
-
 public class CityListItemViewHolder extends RecyclerView.ViewHolder {
 
     private final CityListItemClickHandler itemClickHandler;
@@ -38,6 +37,7 @@ public class CityListItemViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+        // Paint items in different colors
         if (position % 2 != 0) {
             itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.cities_search_recycler_item_odd));
         } else {

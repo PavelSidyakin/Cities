@@ -21,7 +21,7 @@ public interface InitializationProgressHolder {
      * Completes after initialization process completed.
      * Completes immediately if initialization already completed.
      *
-     * scheduler: does not operate by default on a particular Scheduler.
+     * subscribe: does not operate by default on a particular Scheduler.
      * error: if the initialization failed.
      */
     Completable observeInitializationCompleteness();
