@@ -15,4 +15,11 @@
     <string name="city_info_latitude_mask">Latitude: %f</string>
     <string name="city_info_longitude_mask">Longitude: %f</string>
 
+    <string name="about_screen_company_name">Company name:\u0020</string>
+    <string name="about_screen_company_address">Company address:\u0020</string>
+    <string name="about_screen_company_city">Company city:\u0020</string>
+    <string name="about_screen_company_postal">Company postal:\u0020</string>
+    <string name="about_screen_about">About:\u0020</string>
+    <string name="about_screen_loading_failed">Loading Failed</string>
+
 </resources>

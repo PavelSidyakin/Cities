@@ -21,6 +21,8 @@ public interface CitiesSearch {
         void onRequestStarted();
         void onResult(CitiesSearchResultCode resultCode);
 
+        void onAboutAppClicked();
+
         void onDestroyView();
     }
 
@@ -33,6 +35,7 @@ public interface CitiesSearch {
 
         void showMapWithSelectedCity();
         void showCityInfoForSelectedCity();
+        void showAboutApp();
 
         void showError();
         void hideError();

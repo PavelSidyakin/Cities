@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.backbase.android.weatherapp.AboutActivity">
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,13 +18,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company name: "/>
+                android:text="@string/about_screen_company_name"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,13 +38,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company address: "/>
+                android:text="@string/about_screen_company_address"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,13 +58,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company city: "/>
+                android:text="@string/about_screen_company_city"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,13 +78,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company postal: "/>
+                android:text="@string/about_screen_company_postal"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,13 +98,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About: "/>
+                android:text="@string/about_screen_about"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -120,7 +127,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading Failed"
+        android:text="@string/about_screen_loading_failed"
         android:visibility="gone"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_centerInParent="true"

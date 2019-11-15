@@ -95,6 +95,8 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
             }
         });
 
+        view.findViewById(R.id.image_view_help_cities_search).setOnClickListener(v -> presenter.onAboutAppClicked());
+
         presenter.onViewReady();
     }
 
@@ -162,6 +164,11 @@ public class CitiesSearchFragment extends DaggerFragment implements CitiesSearch
     @Override
     public void showCityInfoForSelectedCity() {
         mainView.showCityInfoScreen();
+    }
+
+    @Override
+    public void showAboutApp() {
+        mainView.showAboutAppScreen();
     }
 
     @Override

@@ -166,7 +166,11 @@ public class CitiesSearchPresenterImpl implements CitiesSearch.Presenter {
     @Override
     public void onResult(CitiesSearchResultCode resultCode) {
         view.hideProgress();
+    }
 
+    @Override
+    public void onAboutAppClicked() {
+        view.showAboutApp();
     }
 
     @Override

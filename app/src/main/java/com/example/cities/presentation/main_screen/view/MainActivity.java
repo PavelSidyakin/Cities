@@ -1,5 +1,6 @@
 package com.example.cities.presentation.main_screen.view;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cities.R;
+import com.example.cities.presentation.about_app.view.AboutActivity;
 import com.example.cities.presentation.cities_search.view.CitiesSearchFragment;
 import com.example.cities.presentation.city_info.view.CityInfoFragment;
 import com.example.cities.presentation.city_map.view.CityMapFragment;
@@ -124,6 +126,11 @@ public class MainActivity extends DaggerAppCompatActivity implements MainScreen.
     public void showCityInfoScreen() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         new CityInfoFragment().show(fragmentManager, CityInfoFragment.FRAGMENT_TAG);
+    }
+
+    @Override
+    public void showAboutAppScreen() {
+        startActivity(new Intent(this, AboutActivity.class));
     }
 
     @Override

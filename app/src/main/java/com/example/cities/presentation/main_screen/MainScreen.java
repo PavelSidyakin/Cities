@@ -17,5 +17,7 @@ public interface MainScreen {
 
         void showCityInfoScreen();
 
+        void showAboutAppScreen();
+
     }
 }
