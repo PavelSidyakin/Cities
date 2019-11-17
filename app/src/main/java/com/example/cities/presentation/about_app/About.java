@@ -1,9 +1,5 @@
 package com.example.cities.presentation.about_app;
 
-import com.example.cities.model.data.AboutInfo;
-
-import io.reactivex.Single;
-
 /**
  * Created by Backbase R&D B.V on 28/06/2018.
  * MVP contract for AboutActivity

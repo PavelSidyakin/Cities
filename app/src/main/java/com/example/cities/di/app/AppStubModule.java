@@ -6,7 +6,6 @@ import com.example.cities.domain.cities_search.CitiesRepository;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
