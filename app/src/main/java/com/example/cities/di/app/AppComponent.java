@@ -18,8 +18,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
     })
 @Singleton
 public interface AppComponent extends AndroidInjector<TheApplication> {
+
     void inject(TheApplication theApplication);
 
+    @Component.Builder
+    interface Builder {
+        AppComponent.Builder appStubModule(AppStubModule appStubModule);
 
-
+        AppComponent build();
+    }
 }

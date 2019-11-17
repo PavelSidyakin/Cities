@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/infoContainer"
+        android:id="@+id/layout_info_container_about_activity"
         android:visibility="gone"
         android:orientation="vertical">
 
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/companyName"
+                android:id="@+id/text_view_company_name_about_activity"
                 tools:text="Backbase" />
 
         </LinearLayout>
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/companyAdress"
+                android:id="@+id/text_view_company_address_about_activity"
                 tools:text="Backbase" />
 
         </LinearLayout>
@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/companyCity"
+                android:id="@+id/text_view_company_city_about_activity"
                 tools:text="Backbase" />
 
         </LinearLayout>
@@ -90,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/companypostal"
+                android:id="@+id/text_view_company_postal_about_activity"
                 tools:text="Backbase" />
 
         </LinearLayout>
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/aboutInfo"
+                android:id="@+id/text_view_about_info_about_activity"
                 tools:text="Backbase" />
 
         </LinearLayout>
@@ -118,20 +118,20 @@
     </LinearLayout>
 
     <ProgressBar
+        android:id="@+id/progress_bar_about_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:id="@+id/progressBar"/>
+        android:visibility="gone"/>
 
     <TextView
+        android:id="@+id/text_view_error_about_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_screen_loading_failed"
         android:visibility="gone"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_centerInParent="true"
-        android:id="@+id/errorView"/>
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

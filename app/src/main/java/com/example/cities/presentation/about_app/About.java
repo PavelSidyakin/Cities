@@ -14,8 +14,6 @@ public interface About {
     interface Presenter {
 
         void onViewReady();
-        void onSuccess(AboutInfo aboutInfo);
-        void onFail();
         void onDestroyView();
 
     }

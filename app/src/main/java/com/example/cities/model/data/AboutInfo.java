@@ -1,5 +1,9 @@
 package com.example.cities.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by Backbase R&D B.V on 28/06/2018.
  * DTO representing aboutInfo object
@@ -7,52 +11,50 @@ package com.example.cities.model.data;
 
 public class AboutInfo {
 
-    private String companyName;
-    private String companyAddress;
-    private String companyPostal;
-    private String companyCity;
-    private String aboutInfo;
+    @SerializedName("companyName")
+    private final String companyName;
+
+    @SerializedName("companyAddress")
+    private final String companyAddress;
+
+    @SerializedName("postalCode")
+    private final String companyPostal;
+
+    @SerializedName("city")
+    private final String companyCity;
+
+    @SerializedName("details")
+    private final String aboutInfo;
+
+    public AboutInfo(String companyName, String companyAddress, String companyPostal, String companyCity, String aboutInfo) {
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyPostal = companyPostal;
+        this.companyCity = companyCity;
+        this.aboutInfo = aboutInfo;
+    }
 
     public String getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getCompanyAddress() {
         return companyAddress;
     }
 
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
-    }
-
     public String getCompanyPostal() {
         return companyPostal;
-    }
-
-    public void setCompanyPostal(String companyPostal) {
-        this.companyPostal = companyPostal;
     }
 
     public String getCompanyCity() {
         return companyCity;
     }
 
-    public void setCompanyCity(String companyCity) {
-        this.companyCity = companyCity;
-    }
-
     public String getAboutInfo() {
         return aboutInfo;
     }
 
-    public void setAboutInfo(String aboutInfo) {
-        this.aboutInfo = aboutInfo;
-    }
-
+    @NotNull
     @Override
     public String toString() {
         return "AboutInfo{" +

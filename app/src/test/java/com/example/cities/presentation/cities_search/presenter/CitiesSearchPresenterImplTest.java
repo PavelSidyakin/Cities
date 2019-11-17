@@ -22,19 +22,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Single;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -43,6 +40,7 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -64,6 +62,7 @@ class CitiesSearchPresenterImplTest {
 
     private CitiesSearchPresenterImpl citiesSearchPresenter;
 
+    // Used for tests with stream of CityData values
     private List<Integer> cityIdsStream = new ArrayList<>();
 
     private static final String LAST_ENTERED_TEXT = "LAST ENTERED TEXT";
@@ -82,11 +81,10 @@ class CitiesSearchPresenterImplTest {
         XLog.enable(false);
         MockitoAnnotations.initMocks(this);
 
-        citiesSearchPresenter = new CitiesSearchPresenterImpl(view, schedulerProvider, citiesSearchInteractor, citiesScreenInteractor);
-        citiesSearchPresenter.pageSize = PAGE_SIZE;
-        citiesSearchPresenter.initialPageSizeFactor = INITIAL_PAGE_SIZE_FACTOR;
-        citiesSearchPresenter.performSearchTimeoutMillis = 10;
+        createAndSetupPresenter();
+
         when(citiesScreenInteractor.getCurrentSearchText()).thenReturn("");
+
         citiesSearchPresenter.onViewReady();
     }
 
@@ -176,7 +174,7 @@ class CitiesSearchPresenterImplTest {
             waitForRequestCompleteness();
 
             // verify
-            verifyShowProgress();
+            verifyProgressIsShowed();
             verify(citiesSearchInteractor, times(1)).requestCities(LAST_ENTERED_TEXT, 0, INITIAL_PAGE_SIZE);
 
             verify(view).showError();
@@ -284,7 +282,7 @@ class CitiesSearchPresenterImplTest {
 
                 // verify
                 verify(view, never()).showError();
-                verifyShowProgress();
+                verifyProgressIsShowed();
 
                 verify(citiesSearchInteractor, times(1)).requestCities(LAST_ENTERED_TEXT, 0, INITIAL_PAGE_SIZE);
             }
@@ -550,7 +548,7 @@ class CitiesSearchPresenterImplTest {
         void afterEachTest() {
             // verify
             verify(view).showError();
-            verifyShowProgress();
+            verifyProgressIsShowed();
         }
     }
 
@@ -612,13 +610,40 @@ class CitiesSearchPresenterImplTest {
     }
 
     @Test
-    @DisplayName("When view is destroyed, should dispose completable disposable")
-    void onDestroyViewTest() {
+    @DisplayName("When view is destroyed and request completed, should dispose completable disposable")
+    void onDestroyViewTest1() {
         // action
+        citiesSearchPresenter.onSearchTextSubmitted("cecwecwe");
+        waitForRequestCompleteness();
         citiesSearchPresenter.onDestroyView();
 
         // verify
         assertTrue(citiesSearchPresenter.compositeDisposable.isDisposed());
+    }
+
+    @Test
+    @DisplayName("When view is destroyed and request is active, the request should be interrupted")
+    void onDestroyViewTest2() throws InterruptedException {
+        // when
+        when(citiesSearchInteractor.requestCities(anyString(), anyInt(), anyInt()))
+                .thenReturn(Single.timer(Long.MAX_VALUE, TimeUnit.DAYS) // simulate very long request
+                        .map(aLong -> new CitiesSearchResult(CitiesSearchResultCode.OK, null)));
+
+        // action
+        citiesSearchPresenter.onSearchTextSubmitted("cecwecwe");
+        // To make sure the request in actually performed
+        verify(citiesSearchInteractor, timeout(Long.MAX_VALUE)).requestCities(anyString(), anyInt(), anyInt());
+        citiesSearchPresenter.onDestroyView();
+
+        // verify
+        assertTrue(citiesSearchPresenter.compositeDisposable.isDisposed());
+    }
+
+    private void createAndSetupPresenter() {
+        citiesSearchPresenter = new CitiesSearchPresenterImpl(view, schedulerProvider, citiesSearchInteractor, citiesScreenInteractor);
+        citiesSearchPresenter.pageSize = PAGE_SIZE;
+        citiesSearchPresenter.initialPageSizeFactor = INITIAL_PAGE_SIZE_FACTOR;
+        citiesSearchPresenter.performSearchTimeoutMillis = 10;
     }
 
     private void waitForRequestCompleteness() {
@@ -632,7 +657,7 @@ class CitiesSearchPresenterImplTest {
         }
     }
 
-    private void verifyShowProgress() {
+    private void verifyProgressIsShowed() {
         InOrder inOrder = inOrder(view);
         inOrder.verify(view).showProgress();
         inOrder.verify(view).hideProgress();

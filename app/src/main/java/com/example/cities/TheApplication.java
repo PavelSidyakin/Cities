@@ -30,7 +30,7 @@ public class TheApplication extends Application implements HasAndroidInjector {
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.create();
+        appComponent = createAppComponent();
 
         appComponent.inject(this);
 
@@ -46,5 +46,9 @@ public class TheApplication extends Application implements HasAndroidInjector {
     @Override
     public AndroidInjector<Object> androidInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    protected AppComponent createAppComponent() {
+        return DaggerAppComponent.create();
     }
 }

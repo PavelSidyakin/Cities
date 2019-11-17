@@ -34,14 +34,14 @@ public class AboutActivity extends AppCompatActivity implements About.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        companyName = findViewById(R.id.companyName);
-        companyAddress = findViewById(R.id.companyAdress);
-        companyPostal = findViewById(R.id.companypostal);
-        companyCity = findViewById(R.id.companyCity);
-        aboutInfo = findViewById(R.id.aboutInfo);
-        progressBar = findViewById(R.id.progressBar);
-        errorView = findViewById(R.id.errorView);
-        infoContainer = findViewById(R.id.infoContainer);
+        companyName = findViewById(R.id.text_view_company_name_about_activity);
+        companyAddress = findViewById(R.id.text_view_company_address_about_activity);
+        companyPostal = findViewById(R.id.text_view_company_postal_about_activity);
+        companyCity = findViewById(R.id.text_view_company_city_about_activity);
+        aboutInfo = findViewById(R.id.text_view_about_info_about_activity);
+        progressBar = findViewById(R.id.progress_bar_about_activity);
+        errorView = findViewById(R.id.text_view_error_about_activity);
+        infoContainer = findViewById(R.id.layout_info_container_about_activity);
         presenter.onViewReady();
     }
 
