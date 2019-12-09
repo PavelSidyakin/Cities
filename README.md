@@ -29,4 +29,7 @@ On application initialization the city list is loaded from raw resources, then i
 
 When user is typing text in the search box, binary search is performed on the sorted list. Binary sort algorithm is effective in this situation. It runs in O(log(n)) time.
 
+##### Class diagram
+![Class diagram](https://github.com/PavelSidyakin/Cities/blob/master/CitiesClassDiagram.png)
+
  
